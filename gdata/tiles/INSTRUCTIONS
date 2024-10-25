@@ -1,0 +1,60 @@
+Each tile is to be 2 x 3 characters
+
+I havent decided if file will have all chars on one line or two but i think 1 line will be easier for parsing so make sure I delete this if I change my mind in the future
+
+map will be printed with horizontal and vertical seperation lines
+ex. (x will be the characters)
+
+
+xxx | xxx | xxx | xxx | xxx
+xxx | xxx | xxx | xxx | xxx
+---------------------------
+xxx | xxx | xxx | xxx | xxx
+xxx | xxx | xxx | xxx | xxx
+---------------------------
+xxx | xxx | xxx | xxx | xxx
+xxx | xxx | xxx | xxx | xxx
+---------------------------
+xxx | xxx | xxx | xxx | xxx
+xxx | xxx | xxx | xxx | xxx
+---------------------------
+xxx | xxx | xxx | xxx | xxx
+xxx | xxx | xxx | xxx | xxx
+
+
+tiles printed as they should be displayed below 
+
+
+#########
+FIND UNICODE AT https://symbl.cc/en/unicode-table
+#########
+
+wall:
+¤̅¤̅¤̅͟͟͟
+¤̲¤̲¤̲
+
+empty:
+╭─╮
+╰─╯
+
+player:
+⌤ 
+⋰⊺⋱
+
+enemy:
+⎦∵⎣
+⎤ᐜ⎡
+
+end:
+▿▿▿
+▵▵▵
+
+passage:
+﹈ ﹈
+﹇ ﹇
+
+dirt:
+ൎൎൎ
+ൎൎൎ
+
+
