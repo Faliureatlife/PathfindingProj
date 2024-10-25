@@ -1,5 +1,5 @@
-#include <cstdio>
-#include "matrix.h" //allow "normal" array indexing i think
+/*#include <cstdio>*/
+/*#include "matrix.h" //allow "normal" array indexing i think*/
 class graph{
 public:
   matrix mtrx;
