@@ -29,31 +29,31 @@ tiles printed as they should be displayed below
 FIND UNICODE AT https://symbl.cc/en/unicode-table
 #########
 
-wall:
+wall:  #
 ¤̅¤̅¤̅͟͟͟
 ¤̲¤̲¤̲
 
-empty:
+empty:  0
 ╭─╮
 ╰─╯
 
-player:
+player:  P
 ⌤ 
 ⋰⊺⋱
 
-enemy:
+enemy:  E
 ⎦∵⎣
 ⎤ᐜ⎡
 
-end:
+end:  G
 ▿▿▿
 ▵▵▵
 
-passage:
+passage:  S
 ﹈ ﹈
 ﹇ ﹇
 
-dirt:
+dirt:   D
 ൎൎൎ
 ൎൎൎ
 

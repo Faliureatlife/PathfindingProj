@@ -2,12 +2,12 @@
 /*#include "matrix.h" //allow "normal" array indexing i think*/
 class graph{
 public:
-  matrix mtrx;
+  matrix<int> mtrx;
   int size;
 
   graph(int n) {
     /*matrix = new int[n][n];*/
-    mtrx = matrix(n);
+    mtrx = matrix<int>(n);
     mtrx.initmtrx(n);    
     size = n;
   }

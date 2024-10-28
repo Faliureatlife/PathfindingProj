@@ -1,14 +1,15 @@
 
+template <typename T>
 class matrix {
 public:
-  int* arr;
+  T* arr;
   int len;
   matrix(): arr(nullptr), len(0) {}
   matrix(int n) :  arr(nullptr), len(n) {}
   
   // N MUST EQUAL LEN
   void initmtrx(int n){
-    int* newarr = new int[n*n];
+    T* newarr = new T[n*n];
     arr = newarr;
   }
   void setone(int n, int m){
@@ -29,7 +30,7 @@ public:
     arr[(n*len) - 1 + m] = 0;
   }
 
-  int poke(int n, int m){
+  T poke(int n, int m){
     return arr[(n*len) - 1 + m];
   }
 
