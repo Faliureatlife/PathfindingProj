@@ -124,23 +124,6 @@ public:
             }
         }
     }
-    void DisplayMST(int* parent) {
-        cout << "MST Edge Weight" << endl;
-        for (int i = 1; i < n; i++) {
-            cout << "(" << parent[i] << "-> " << i << ") w = " << GetEdgeWeight(i, parent[i]) << endl;
-        }
-    }
-    int minK(int* key, bool* mstSet) {
-        int min = INT_MAX;
-        int min_index = INT_MAX;
-        for (int v = 0; v < n; v++) {
-            if ((mstSet[v] == false) && (key[v] < min)) {
-                min = key[v];
-                min_index = v;
-            }
-        }
-        return min_index;
-    }
 };
 
 /*class graph {
