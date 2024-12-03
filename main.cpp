@@ -79,8 +79,6 @@ void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileDa
 //function to print based off of the map data
 //comment out to hide warnings 
 
-
-
 /*
 void tileprint(Matrix* tiles){
   //using (i,j) notation is kinda redundant i should just access the array inside but this is more "in the spirit" of the class heirarchy
@@ -107,8 +105,6 @@ void tileprint(Matrix* tiles){
   } 
 }
 */
-
-
 
 //handle movement of player and enemy per turn (may get relocated to djakstra.h and enemy.h respectivly)
 void updatePos(Matrix<char>){
