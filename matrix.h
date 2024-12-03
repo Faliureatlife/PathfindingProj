@@ -1,8 +1,8 @@
-
+template <typename T>  
 class Matrix {
 private:
     int n, m;
-    double** A;
+    T** A;
     void Clean() {
         for (int i = 0; i < n; i++) {
             delete[] A[i];
@@ -17,9 +17,9 @@ public:
     Matrix(int n1, int m1) {
         n = n1;
         m = m1;
-        A = new double* [n];
+        A = new T* [n];
         for (int i = 0; i < n; i++) {
-            A[i] = new double[m];
+            A[i] = new T[m];
             for (int j = 0; j < m; j++) {
                 A[i][j] = 0;
             }
@@ -30,7 +30,7 @@ public:
         m = M.m;
         A = new double* [n];
         for (int i = 0; i < n; i++) {
-            A[i] = new double[m];
+            A[i] = new T[m];
             for (int j = 0; j < m; j++) {
                 A[i][j] = M.A[i][j];
             }
@@ -39,7 +39,7 @@ public:
     ~Matrix() {
         Clean();
     }
-    void Init(double x) {
+    void Init(T x) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 A[i][j] = x;
@@ -55,11 +55,11 @@ public:
         }
     }
     void Display() {
-        cout << "Size: " << n << " X " << m << endl;
+        std::cout << "Size: " << n << " X " << m << std::endl;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                cout << A[i][j] << " ";
-            } cout << endl;
+                std::cout << A[i][j] << " ";
+            } std::cout << std::endl;
         }
     }
     int GetRows() const {
@@ -72,16 +72,16 @@ public:
         try {
             return A[i][j];
         }
-        catch (exception& e) {
-            cout << "Issue with Index: " << e.what() << endl;
+        catch (std::exception& e) {
+            std::cout << "Issue with Index: " << e.what() << std::endl;
         }
     }
     void SetCell(int i, int j, double x) {
         try {
             A[i][j] = x;
         }
-        catch (exception& e) {
-            cout << "Issue with Index: " << e.what() << endl;
+        catch (std::exception& e) {
+            std::cout << "Issue with Index: " << e.what() << std::endl;
         }
     }
     double operator()(int i, int j) const {
@@ -158,7 +158,7 @@ public:
     }
     Matrix operator*(Matrix& a) {
         if (this->m != a.n) {
-            cout << "Improper Dimesions" << endl;
+            std::cout << "Improper Dimesions" << std::endl;
             return *this;
         }
         else {
@@ -186,7 +186,7 @@ public:
         }
         return out;
     }
-    tuple<double, int, int> GetMin() {
+  std::tuple<double, int, int> GetMin() {
         double minVal = DBL_MAX;
         int argi = 0; int argj = 0;
         for (int i = 0; i < n; i++) {
@@ -199,7 +199,7 @@ public:
             }
         }
         A[argi][argj] = 0;
-        return make_tuple(minVal, argi, argj);
+        return std::make_tuple(minVal, argi, argj);
     }
 };
 

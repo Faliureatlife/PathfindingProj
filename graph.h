@@ -1,18 +1,18 @@
 /*#include <cstdio>*/
 /*#include "matrix.h" //allow "normal" array indexing i think*/
 
-class GraphAM {
+class graph {
 private:
     int n;
     double* M;
     int* current;
 public:
-    GraphAM() {
+    graph() {
         n = 0;
         M = nullptr;
         current = nullptr;
     }
-    GraphAM(int n1) {
+    graph(int n1) {
         n = n1;
         M = new double[n * n];
         for (int i = 0; i < n * n; i++) {
@@ -23,64 +23,64 @@ public:
             current[i] = 0;
         }
     }
-    ~GraphAM() {
+    ~graph() {
         delete[] M;
         delete[] current;
     }
-    int GetNumberVertices() {
+    int getNumberVertices() {
         return n;
     }
-    int GetDegree(int u) {
+    int getDegree(int u) {
         int degree = 0;
         for (int v = 0; v < n; v++) {
-            if (EdgeExist(u, v)) {
+            if (edgeExist(u, v)) {
                 degree++;
             }
         }
         return degree;
     }
-    int GetIndex(int u, int v) {
+    int getIndex(int u, int v) {
         return u * n + v;
     }
-    bool EdgeExist(int u, int v) {
-        return (M[GetIndex(u, v)] != 0);
+    bool edgeExist(int u, int v) {
+        return (M[getIndex(u, v)] != 0);
     }
-    double GetEdgeWeight(int u, int v) {
+    double getEdgeWeight(int u, int v) {
         if (u < 0 || u >= n || v < 0 || v >= n) {
             return -1;
         }
-        return M[GetIndex(u, v)];
+        return M[getIndex(u, v)];
     }
-    void SetDirectedE(int u, int v, double w) {
-        M[GetIndex(u, v)] = w;
+    void setDirectedE(int u, int v, double w) {
+        M[getIndex(u, v)] = w;
     }
-    void SetDirectedE(int u, int v) {
-        M[GetIndex(u, v)] = 1;
+    void setDirectedE(int u, int v) {
+        M[getIndex(u, v)] = 1;
     }
-    void SetUndirectedE(int u, int v, double w) {
-        M[GetIndex(u, v)] = w;
-        M[GetIndex(v, u)] = w;
+    void setUndirectedE(int u, int v, double w) {
+        M[getIndex(u, v)] = w;
+        M[getIndex(v, u)] = w;
     }
-    void SetUndirectedE(int u, int v) {
-        M[GetIndex(u, v)] = 1;
-        M[GetIndex(v, u)] = 1;
+    void setUndirectedE(int u, int v) {
+        M[getIndex(u, v)] = 1;
+        M[getIndex(v, u)] = 1;
     }
-    void RemoveDirectedE(int u, int v) {
-        M[GetIndex(u, v)] = 0;
+    void removeDirectedE(int u, int v) {
+        M[getIndex(u, v)] = 0;
     }
-    void RemoveUndirectedE(int u, int v) {
-        M[GetIndex(u, v)] = 0;
-        M[GetIndex(v, u)] = 0;
+    void removeUndirectedE(int u, int v) {
+        M[getIndex(u, v)] = 0;
+        M[getIndex(v, u)] = 0;
     }
-    void SetCurrentVertex(int u) {
+    void setCurrentVertex(int u) {
         current[u] = -1;
     }
-    bool GetNextAdjacent(int u, int& vout) {
+    bool getNextAdjacent(int u, int& vout) {
         int v = current[u] + 1;
         vout = -1;
         bool found = false;
         while ((!found) && (v < n)) {
-            if (EdgeExist(u, v)) {
+            if (edgeExist(u, v)) {
                 found = true;
                 vout = v;
             }
@@ -90,44 +90,44 @@ public:
         return found;
 
     }
-    void Display() {
+    void display() {
         int k = 0;
-        cout << " :";
+        std::cout << " :";
         for (int v = 0; v < n; v++) {
-            cout << v << "\t";
-        } cout << endl;
+            std::cout << v << "\t";
+        } std::cout << std::endl;
         for (int u = 0; u < n; u++) {
-            cout << u << ":";
+            std::cout << u << ":";
             for (int v = 0; v < n; v++) {
-                cout << M[k] << "\t";
+                std::cout << M[k] << "\t";
                 k++;
-            } cout << endl;
+            } std::cout << std::endl;
         }
     }
     void DisplayDirected() {
         int k = 0;
-        cout << "List of Edges:" << endl;
+        std::cout << "List of Edges:" << std::endl;
         for (int u = 0; u < n; u++) {
             for (int v = 0; v < n; v++) {
-                cout << "(" << u << "," << v << ") w:" << GetEdgeWeight(u, v) << endl;
+                std::cout << "(" << u << "," << v << ") w:" << getEdgeWeight(u, v) << std::endl;
             }
         }
     }
-    void DisplayUndirected() {
+    void displayUndirected() {
         int k = 0;
-        cout << "List of Edges:" << endl;
+        std::cout << "List of Edges:" << std::endl;
         for (int u = 0; u < n; u++) {
             for (int v = u + 1; v < n; v++) {
-                if (EdgeExist(u, v)) {
-                    cout << "(" << u << "," << v << ") w:" << GetEdgeWeight(u, v) << endl;
+                if (edgeExist(u, v)) {
+                    std::cout << "(" << u << "," << v << ") w:" << getEdgeWeight(u, v) << std::endl;
                 }
             }
         }
     }
-    void DisplayMST(int* parent) {
-        cout << "MST Edge Weight" << endl;
+    void displayMST(int* parent) {
+        std::cout << "MST Edge Weight" << std::endl;
         for (int i = 1; i < n; i++) {
-            cout << "(" << parent[i] << "-> " << i << ") w = " << GetEdgeWeight(i, parent[i]) << endl;
+            std::cout << "(" << parent[i] << "-> " << i << ") w = " << getEdgeWeight(i, parent[i]) << std::endl;
         }
     }
     int minK(int* key, bool* mstSet) {

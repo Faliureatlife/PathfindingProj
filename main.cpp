@@ -1,8 +1,15 @@
 //move all includes from headers and place here so its easier to keep track of (no duplicates of cstdio etc.)
 //it wont matter if the headers are missing their includes but we should keep track of which headers need which other headers if we want to make them portable to other projects
-//i.e. graph.h needs matrix.h to work, so we will have to place it here and leave it commented in the header for that
-#include <cstdio> //used by matrix.h for fprintf (for printing to stderr, not sure if we need to use an ifdef to change away from stderr on windows)
+//i.e. graph.h needs Matrix.h to work, so we will have to place it here and leave it commented in the header for that
+
+
+#include <cstdio> //used by Matrix.h for fprintf (for printing to stderr, not sure if we need to use an ifdef to change away from stderr on windows)
                   //used by graph.h for printfgraph
+#include <climits> //used by graph.h
+#include <cfloat>
+#include <iostream> //;w;
+#include <stdexcept> //used by matrix.h
+#include <tuple> //used by main
 #include "matrix.h" //used by graph.h
 #include "graph.h"
 
@@ -17,8 +24,8 @@ graph* createGFromFile(char* str){
 }
 
 //reads file and stores the tile type at each point
-//if dealing with ints for tile tracking is too much then implement matrix template<T>
-matrix<char>* createMFromFile(char* str){
+//if dealing with ints for tile tracking is too much then implement Matrix template<T>
+Matrix<char>* createMFromFile(char* str){
   return nullptr;
 }
 
@@ -43,9 +50,9 @@ void initTiles(char** tileData){
 
   }
 }
-//function that calls createfromfile for matrix and graph
-//if pointers don't work then return as enum <graph,matrix>
-void initMap(graph* connections, matrix<char>* tiles, char* fName, char** tileData){
+//function that calls createfromfile for Matrix and graph
+//if pointers don't work then return as enum <graph,Matrix>
+void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileData){
   //doesnt print unless specified to where
   //"gdata/maps/"
   char* dir = new char[CHARCOUNT + 11];
@@ -75,7 +82,7 @@ void initMap(graph* connections, matrix<char>* tiles, char* fName, char** tileDa
 
 
 /*
-void tileprint(matrix* tiles){
+void tileprint(Matrix* tiles){
   //using (i,j) notation is kinda redundant i should just access the array inside but this is more "in the spirit" of the class heirarchy
   for (int i = 0; i < tiles->len; i++){
     for (int j = 0; j < tiles->len; j++){
@@ -104,7 +111,7 @@ void tileprint(matrix* tiles){
 
 
 //handle movement of player and enemy per turn (may get relocated to djakstra.h and enemy.h respectivly)
-void updatePos(matrix<char>){
+void updatePos(Matrix<char>){
 }
 
 int main(){
@@ -112,7 +119,7 @@ int main(){
   //7 is number of types of tile, 6 is characters per tile
   char** tileData = new char*[7];
   for(int i = 0; i < 7; i++) tileData[i] = new char[TILESIZE];
-  matrix<char>* tileMatrix;
+  Matrix<char>* tileMatrix;
   graph* connectionMatrix;
   //make static char*[5] that contains all the places the maps are located
   //potentially change last digit of the address in original pointer so we dont need more pointers
