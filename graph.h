@@ -104,7 +104,7 @@ public:
             } std::cout << std::endl;
         }
     }
-    void DisplayDirected() {
+    void displayDirected() {
         int k = 0;
         std::cout << "List of Edges:" << std::endl;
         for (int u = 0; u < n; u++) {
@@ -124,7 +124,52 @@ public:
             }
         }
     }
+
+    void Dijkstra(int s, double*& d, int*& pi) {
+        d = new double[n];
+        pi = new int[n];
+        PriorityQueue* V = new PriorityQueue(n);
+        Queue* S = new Queue(n);
+        for (int u = 0; u < n; u++) {
+            d[u] = DBL_MAX;
+            pi[u] = -1;
+        }
+        d[s] = 0;
+        for (int u = 0; u < n; u++) {
+            V->Push(u, d[u]);
+        }
+        V->Display();
+        while (!V->IsEmpty()) {
+            Data out = V->Pop();
+            V->Display(); //Dont know what you want with this
+            S->Enqueue(out.index);
+            int u = out.index;
+            //cout << "Use: " << out.index << " with d:" << out.value << endl;
+            for (int v = 0; v < n; v++) {
+                if (EdgeExist(u, v)) {
+                    double w = GetEdgeWeight(u, v);
+                    if (d[v] > d[u] + w) {
+                        d[v] = d[u] + w;
+                        pi[v] = u;
+                        V->DecreaseKey(v, d[v]);
+                    }
+                }
+            }
+            //DisplayShortestPath(d, pi, n);  
+            V->Display(); //Dont know what you want with this
+        }
+        delete V;
+        delete S;
+    }
+
 };
+/* 
+void DisplayShortestPath(double* d, int* pi, int n) {
+    for (int i = 0; i < n; i++) {
+        cout << "Vertex: " << i << " : d = " << d[i] << " : pi: " << pi[i] << endl;
+    }
+    cout << endl;
+} */
 
 /*class graph {
 public:
