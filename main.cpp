@@ -18,7 +18,9 @@
 //the defines stay after includes to make sure they are only local and dont override others we may use
 //SIZE is equal to the map side length squared
 #define SIZE 25
+//i dont remember 
 #define CHARCOUNT 2
+//TILESIZE is the amount of chars in a single tile 
 #define TILESIZE 6
 //reads file and puts connections into graph
 graph* createGFromFile(char* str){
@@ -46,7 +48,6 @@ void initTiles(char** tileData){
     //error in these two lines VV (i believe missing file)
     //open and read file into correct position in array
     FILE* tileFile = fopen(dir, "r");
-    fprintf(stderr,"does tileFile exist?\n");
     if (tileFile == nullptr) {/*fprintf(stderr,"%d ",dir[13]);*/perror("The tile file doesnt exist (yet?)\t"); }
     else fprintf(stderr, "tileFile DOES exist");
     fgets(tileData[i], 7, tileFile);
@@ -71,12 +72,14 @@ void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileDa
 
   //error handling in case file doesnt exist
   if (map == nullptr) perror("\t");
-  char* content;
+  char* content = new char[TILESIZE];
 
   //should leave out the \0 at the end
-  fgets(content, SIZE, map);
+  //only segfault when 1?
+  fgets(content, TILESIZE, map);
   tiles = createMFromFile(content);
   connections = createGFromFile(content);
+  fprintf(stderr,"does this exist?\n");
   initTiles(tileData);
 }
 
@@ -127,6 +130,7 @@ int main(){
 
   //must be fgets instead of gets because of bufferoverflow reasons (doesnt exist past c++11)
   fgets(mapSelect, CHARCOUNT, stdin);
+  printf("%c\n",mapSelect[0]);
   mapSelect[1] = mapSelect[0];
   mapSelect[0] = 'm';
 
