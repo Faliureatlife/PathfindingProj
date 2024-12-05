@@ -1,10 +1,10 @@
 
-struct Data {
+struct data {
 	int index;
 	double value;
 };
 
-class PriorityQueue {
+class priorityQueue {
 private:
 	void minHeapify(int i, int size) {
 		int left, right, smallest;
@@ -18,37 +18,37 @@ private:
 			smallest = right;
 		}
 		if (smallest != i) {
-			swap(queue[i], queue[smallest]);
+			std::swap(queue[i], queue[smallest]);
 			minHeapify(smallest, size);
 		}
 	}
 	int capacity;
 	int elements;
-	Data* queue;
+	data* queue;
 public:
-	PriorityQueue() {
+	priorityQueue() {
 		capacity = 0;
 		elements = 0;
 		queue = nullptr;
 	}
-	PriorityQueue(int c) {
+	priorityQueue(int c) {
 		capacity = c;
 		elements = 0;
-		queue = new Data[capacity];
+		queue = new data[capacity];
 	}
-	~PriorityQueue() {
+	~priorityQueue() {
 		delete[] queue;
 	}
-	int GetElems() {
+	int getElems() {
 		return elements;
 	}
-	bool IsEmpty() {
+	bool isEmpty() {
 		return (elements == 0);
 	}
-	bool IsFull() {
+	bool isFull() {
 		return (elements == capacity);
 	}
-	int GetParent(int child) {
+	int getParent(int child) {
 		if (child % 2 == 0) {
 			return (child / 2) - 1;
 		}
@@ -56,15 +56,15 @@ public:
 			return child / 2;
 		}
 	}
-	int GetLeftChild(int parent) {
+	int getLeftChild(int parent) {
 		return (2 * parent + 1);
 	}
-	int GetRightChild(int parent) {
+	int getRightChild(int parent) {
 		return (2 * parent + 2);
 	}
-	void Push(int index, double value) {
+	void push(int index, double value) {
 		if (elements < capacity) {
-			Data x;
+			data x;
 			x.index = index;
 			x.value = value;
 			int i = elements;
@@ -74,29 +74,29 @@ public:
 			}
 			queue[i] = x;
 			elements++;
-			cout << "Added (" << index << "," << value << ") size = " << elements
-				<< endl;
+			std::cout << "Added (" << index << "," << value << ") size = " << elements
+				<< std::endl;
 		}
 		else {
-			cout << "Out of Capacity" << endl;
+			std::cout << "Out of Capacity" << std::endl;
 		}
 	}
-	Data Pop() {
+	data pop() {
 		if (elements > 0) {
-			Data temp = queue[0];
+			data temp = queue[0];
 			queue[0] = queue[elements - 1];
 			minHeapify(0, elements);
 			elements--;
 			return temp;
 		}
 		else {
-			Data temp;
+			data temp;
 			temp.value = 0;
 			temp.index = -1;
 			return temp;
 		}
 	}
-	void DecreaseKey(int index, double value) {
+	void decreaseKey(int index, double value) {
 		int i = 0;
 		bool found = false;
 		while ((!found) && (i < elements)) {
@@ -108,28 +108,28 @@ public:
 		}
 		if (found) {
 			int child = -1;
-			int parent = GetParent(child);
+			int parent = getParent(child);
 			while ((queue[child].value < queue[parent].value) && (child >= 0 &&
 				parent >= 0)) {
-				swap(queue[child], queue[parent]);
+				std::swap(queue[child], queue[parent]);
 				child = parent;
-				parent = GetParent(child);
+				parent = getParent(child);
 			}
 		}
 	}
-	void BuildMinHeap() {
+	void buildMinHeap() {
 		for (int i = elements / 2 - 1; i >= 0; i--) {
 			minHeapify(i, elements);
 		}
 	}
-	void Display() {
-		cout << "Priority Queue" << endl;
-		cout << "\t capacity: " << capacity << endl;
-		cout << "\t elements: " << elements << endl;
+	void display() {
+		std::cout << "Priority Queue" << std::endl;
+		std::cout << "\t capacity: " << capacity << std::endl;
+		std::cout << "\t elements: " << elements << std::endl;
 		for (int i = 0; i < elements; i++) {
-			cout << i << ": (" << queue[i].index << "," << queue[i].value << ")" <<
-				endl;
+			std::cout << i << ": (" << queue[i].index << "," << queue[i].value << ")" <<
+				std::endl;
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
 };

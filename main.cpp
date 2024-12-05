@@ -11,6 +11,8 @@
 #include <stdexcept> //used by matrix.h
 #include <tuple> //used by main
 #include "matrix.h" //used by graph.h
+#include "priorityQ.h" //used by graph.h
+#include "queue.h" //used by graph.h
 #include "graph.h"
 
 //the defines stay after includes to make sure they are only local and dont override others we may use
@@ -44,7 +46,9 @@ void initTiles(char** tileData){
     //error in these two lines VV (i believe missing file)
     //open and read file into correct position in array
     FILE* tileFile = fopen(dir, "r");
-    if (tileFile == nullptr) {fprintf(stderr,"%d ",dir[13]);perror("the tile file t doesnt exist (yet?)\t"); }
+    fprintf(stderr,"does tileFile exist?\n");
+    if (tileFile == nullptr) {/*fprintf(stderr,"%d ",dir[13]);*/perror("The tile file doesnt exist (yet?)\t"); }
+    else fprintf(stderr, "tileFile DOES exist");
     fgets(tileData[i], 7, tileFile);
 
 
