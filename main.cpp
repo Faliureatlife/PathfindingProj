@@ -18,19 +18,33 @@
 
 //the defines stay after includes to make sure they are only local and dont override others we may use
 //SIZE is equal to the map side length squared
-#define SIZE 25
+#define SIZE 380
+#define H_SIZE
+#define V_SIZE
 //i dont remember 
 #define CHARCOUNT 2
 //TILESIZE is the amount of chars in a single tile 
 #define TILESIZE 6
 //reads file and puts connections into graph
-graph* createGFromFile(char* str){
+graph* createGFromM(Matrix<char>* str){
   return nullptr;
 }
 
 //reads file and stores the tile type at each point
 //if dealing with ints for tile tracking is too much then implement Matrix template<T>
-Matrix<char>* createMFromFile(char* str){
+Matrix<char>* createMFromFile(FILE* map){
+  if (map == nullptr) perror("Map does not exist\t");
+  char* content = new char[TILESIZE];
+  Matrix<char>* mtrx = new Matrix<char>();
+  //initialized all tiles
+  fgets(content, TILESIZE, map);
+
+  for(int i = 0; i < H_SIZE; i++){
+   for(int j = 0; j < V_SIZE; j++){
+      mtrx->SetCell(i,j,content[i*H_SIZE + j]);
+    }
+  }
+  
   return nullptr;
 }
 
@@ -40,7 +54,7 @@ void initTiles(char** tileData){
   /*char* tName = (char*)"gdata/tiles/t";*/
   char* dir = new char[14];
 
-  for(int i = 1;i < 7; i++){
+  for(int i = 1;i < 8; i++){
     //getting cast to 1 instead of '1', needs to be fixed
     sprintf(dir, "gdata/tiles/t%d",i);
     
@@ -48,7 +62,7 @@ void initTiles(char** tileData){
     FILE* tileFile = fopen(dir, "r");
     if (tileFile == nullptr) perror("The tile file doesnt exist (yet?)\t");
     fprintf(stderr,"%d does this exist?\n", i);
-    fgets(tileData[i], 7, tileFile);
+    fgets(tileData[i-1], 7, tileFile);
     fprintf(stderr,"%d does this exist?\n", i);
   }
   fprintf(stderr,"does this exist?\n");
@@ -65,20 +79,16 @@ void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileDa
   //remember to remove 'terminating nul'
   sprintf(dir, "gdata/maps/%c%c",fName[0],fName[1]);
   /*dir[12] = fName[1];*/
-
-  //fopen to assign /dir/ to FILE* map
   FILE* map = fopen(dir, "r");
 
-  //error handling in case file doesnt exist
-  if (map == nullptr) perror("Map does not exist\t");
-  char* content = new char[TILESIZE];
-
-  //should leave out the \0 at the end
-  //only segfault when 1?
-  fgets(content, TILESIZE, map);
-  tiles = createMFromFile(content);
-  connections = createGFromFile(content);
+  //fopen to assign /dir/ to FILE* map
+  tiles = createMFromFile(map);
+  connections = createGFromM(tiles);
   initTiles(tileData);
+
+  tiles = createMFromFile(map);
+  //read map into tiles and connections
+  
 }
 
 //function to print based off of the map data

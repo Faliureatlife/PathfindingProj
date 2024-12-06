@@ -68,7 +68,7 @@ public:
     int GetCols() const {
         return m;
     }
-    double GetCell(int i, int j) {
+    T GetCell(int i, int j) {
         try {
             return A[i][j];
         }
@@ -76,7 +76,7 @@ public:
             std::cout << "Issue with Index: " << e.what() << std::endl;
         }
     }
-    void SetCell(int i, int j, double x) {
+    void SetCell(int i, int j, T x) {
         try {
             A[i][j] = x;
         }
