@@ -24,36 +24,37 @@ xxx | xxx | xxx | xxx | xxx
 
 tiles printed as they should be displayed below 
 
+All Tiles Are In Order
 
 #########
 FIND UNICODE AT https://symbl.cc/en/unicode-table
 #########
 
-wall:  #
+wall(t1):  #
 ¤̅¤̅¤̅͟͟͟
 ¤̲¤̲¤̲
 
-empty:  0
+empty(t2):  0
 ╭─╮
 ╰─╯
 
-player:  P
+player(t3):  P
 ⌤ 
 ⋰⊺⋱
 
-enemy:  E
+enemy(t4):  E
 ⎦∵⎣
 ⎤ᐜ⎡
 
-end:  G
+end(t5):  G
 ▿▿▿
 ▵▵▵
 
-passage:  S
+passage(t6):  S
 ﹈ ﹈
 ﹇ ﹇
 
-dirt:   D
+dirt(t7):   D
 ൎൎൎ
 ൎൎൎ
 
