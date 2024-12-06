@@ -19,8 +19,8 @@
 //the defines stay after includes to make sure they are only local and dont override others we may use
 //SIZE is equal to the map side length squared
 #define SIZE 380
-#define H_SIZE
-#define V_SIZE
+#define H_SIZE 19
+#define V_SIZE 20
 //i dont remember 
 #define CHARCOUNT 2
 //TILESIZE is the amount of chars in a single tile 
@@ -33,19 +33,23 @@ graph* createGFromM(Matrix<char>* str){
 //reads file and stores the tile type at each point
 //if dealing with ints for tile tracking is too much then implement Matrix template<T>
 Matrix<char>* createMFromFile(FILE* map){
+  //check for file pointer NE nullptr
   if (map == nullptr) perror("Map does not exist\t");
-  char* content = new char[TILESIZE];
-  Matrix<char>* mtrx = new Matrix<char>();
-  //initialized all tiles
-  fgets(content, TILESIZE, map);
 
-  for(int i = 0; i < H_SIZE; i++){
-   for(int j = 0; j < V_SIZE; j++){
-      mtrx->SetCell(i,j,content[i*H_SIZE + j]);
-    }
+  Matrix<char>* mtrx = new Matrix<char>(H_SIZE,V_SIZE);
+
+  //read the data into content
+  rewind(map);
+  int i = 0; 
+  int c;
+  while ((c = fgetc(map)) != EOF){
+    mtrx->SetCell(i % 19, i/19, c);
+    i++;
   }
   
-  return nullptr;
+  //translate data into matrix
+
+  return mtrx;
 }
 
 
@@ -61,11 +65,8 @@ void initTiles(char** tileData){
     //open and read file into correct position in array
     FILE* tileFile = fopen(dir, "r");
     if (tileFile == nullptr) perror("The tile file doesnt exist (yet?)\t");
-    fprintf(stderr,"%d does this exist?\n", i);
-    fgets(tileData[i-1], 7, tileFile);
-    fprintf(stderr,"%d does this exist?\n", i);
+    fclose(tileFile);
   }
-  fprintf(stderr,"does this exist?\n");
 }
 //function that calls createfromfile for Matrix and graph
 //if pointers don't work then return as enum <graph,Matrix>
@@ -79,15 +80,21 @@ void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileDa
   //remember to remove 'terminating nul'
   sprintf(dir, "gdata/maps/%c%c",fName[0],fName[1]);
   /*dir[12] = fName[1];*/
+  /*std::ifstream map(dir, std::ios::in)*/
   FILE* map = fopen(dir, "r");
 
-  //fopen to assign /dir/ to FILE* map
-  tiles = createMFromFile(map);
-  connections = createGFromM(tiles);
+  //grab the tiles from the files that define them
   initTiles(tileData);
 
-  tiles = createMFromFile(map);
+  //marker
+  fprintf(stderr, "tiles Initialized\n");
+
   //read map into tiles and connections
+  tiles = createMFromFile(map);
+  tiles->Display();
+
+  connections = createGFromM(tiles);
+  fclose(map);
   
 }
 
