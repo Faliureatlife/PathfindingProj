@@ -15,6 +15,7 @@
 #include "queue.h" //used by graph.h
 #include "graph.h"
 
+
 //the defines stay after includes to make sure they are only local and dont override others we may use
 //SIZE is equal to the map side length squared
 #define SIZE 25
@@ -36,24 +37,21 @@ Matrix<char>* createMFromFile(char* str){
 
 void initTiles(char** tileData){
   //some setup for the directories as always
-  char* tName = (char*)"gdata/tiles/t";
+  /*char* tName = (char*)"gdata/tiles/t";*/
   char* dir = new char[14];
-  for(int i = 0; i < 13; i++) dir[i] = tName[i];
 
-  for(int i = 1;i < 8; i++){
+  for(int i = 1;i < 7; i++){
     //getting cast to 1 instead of '1', needs to be fixed
-    dir[13] = static_cast<char>(i);
-    /*dir[13] = (char)i;*/
+    sprintf(dir, "gdata/tiles/t%d",i);
     
-    //error in these two lines VV (i believe missing file)
     //open and read file into correct position in array
     FILE* tileFile = fopen(dir, "r");
-    if (tileFile == nullptr) {/*fprintf(stderr,"%d ",dir[13]);*/perror("The tile file doesnt exist (yet?)\t"); }
-    else fprintf(stderr, "tileFile DOES exist");
+    if (tileFile == nullptr) perror("The tile file doesnt exist (yet?)\t");
+    fprintf(stderr,"%d does this exist?\n", i);
     fgets(tileData[i], 7, tileFile);
-
-
+    fprintf(stderr,"%d does this exist?\n", i);
   }
+  fprintf(stderr,"does this exist?\n");
 }
 //function that calls createfromfile for Matrix and graph
 //if pointers don't work then return as enum <graph,Matrix>
@@ -63,15 +61,16 @@ void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileDa
   char* dir = new char[CHARCOUNT + 11];
   //create tchar because we cant use a string literal casted to a char*
   char* tchar = (char*)"gdata/maps/";
-  for(int i = 0; i < 11; i++) dir[i] = tchar[i];
-  dir[11] = fName[0];
-  dir[12] = fName[1];
+
+  //remember to remove 'terminating nul'
+  sprintf(dir, "gdata/maps/%c%c",fName[0],fName[1]);
+  /*dir[12] = fName[1];*/
 
   //fopen to assign /dir/ to FILE* map
   FILE* map = fopen(dir, "r");
 
   //error handling in case file doesnt exist
-  if (map == nullptr) perror("\t");
+  if (map == nullptr) perror("Map does not exist\t");
   char* content = new char[TILESIZE];
 
   //should leave out the \0 at the end
@@ -79,7 +78,6 @@ void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileDa
   fgets(content, TILESIZE, map);
   tiles = createMFromFile(content);
   connections = createGFromFile(content);
-  fprintf(stderr,"does this exist?\n");
   initTiles(tileData);
 }
 
@@ -134,13 +132,15 @@ int main(){
   mapSelect[1] = mapSelect[0];
   mapSelect[0] = 'm';
 
+  //for WINDOWS
+  /*system("CLS");*/
+
+  //for LINUX
+  /*system("clear");*/
+
   //Post-Process will kill EOL/EOF char and make it something like an ('m', int) in order to maintain structure of directory positions
     
   //just here to see if its getting read right
-    /*
-    for (int i = 0; i < 2; i++)
-    printf("%d, %c\n", i, mapSelect[i]);
-    */
   //segfault :(
   initMap(connectionMatrix, tileMatrix, mapSelect, tileData);
   return 1;
