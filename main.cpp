@@ -43,7 +43,7 @@ Matrix<char>* createMFromFile(FILE* map){
   int i = 0; 
   int c;
   while ((c = fgetc(map)) != EOF){
-    mtrx->SetCell(i % 19, i/19, c);
+    mtrx->SetCell(i % H_SIZE, i/H_SIZE, c);
     i++;
   }
   
@@ -55,7 +55,6 @@ Matrix<char>* createMFromFile(FILE* map){
 
 void initTiles(char** tileData){
   //some setup for the directories as always
-  /*char* tName = (char*)"gdata/tiles/t";*/
   char* dir = new char[14];
 
   for(int i = 1;i < 8; i++){
@@ -67,7 +66,9 @@ void initTiles(char** tileData){
     if (tileFile == nullptr) perror("The tile file doesnt exist (yet?)\t");
     fclose(tileFile);
   }
+  printf("%c\n",tileData[]);
 }
+
 //function that calls createfromfile for Matrix and graph
 //if pointers don't work then return as enum <graph,Matrix>
 void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileData){
@@ -101,38 +102,22 @@ void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileDa
 //function to print based off of the map data
 //comment out to hide warnings 
 
-/*
-void tileprint(Matrix* tiles){
-  //using (i,j) notation is kinda redundant i should just access the array inside but this is more "in the spirit" of the class heirarchy
-  for (int i = 0; i < tiles->len; i++){
-    for (int j = 0; j < tiles->len; j++){
-      char currtile = tiles->poke(i,j); 
-      if (currtile == "#"){
-        
-      } else if (currtile == "0"){
-
-      } else if (currtile == "P"){
-
-      } else if (currtile == "E"){
-
-      } else if (currtile == "G"){
-
-      } else if (currtile == "S"){
-
-      } else if (currtile == "D"){
-
-      } 
-
+void tileprint(Matrix* tiles, char** tileData){
+  system("clear");
+  for(int i = 0 ; i < V_SIZE; i++){
+    for(int j = 0; j < H_SIZE; j++){
+      for(int c = 0; c < TILESIZE; c++)
+        printf("%c",)
     }
-  } 
+  }
 }
-*/
 
 //handle movement of player and enemy per turn (may get relocated to djakstra.h and enemy.h respectivly)
 void updatePos(Matrix<char>){
 }
 
 int main(){
+  /*setlocale(LC_ALL, "en_US.UTF-16");*/
   char* mapSelect = new char[CHARCOUNT]; //make sure that gets doesnt overflow with the \0 at the end
   //7 is number of types of tile, 6 is characters per tile
   char** tileData = new char*[7];
