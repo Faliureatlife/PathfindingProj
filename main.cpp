@@ -95,13 +95,13 @@ void tileprint(Matrix<char>* tiles, char** tileData){
       //would use switch for readability but not allowed to use break
       //and then we print ending with ,tileData[n] + 12
       //using ansi escape [A for up line and then [C for right on line
-      if(tiles->GetCell(i,j) == '#') printf("%.12s ",tileData[0]);
+      if(tiles->GetCell(i,j) == '#') printf("%.9s ",tileData[0]);
       else if(tiles->GetCell(i,j) == '0') printf("%.9s ",tileData[1]);
-      else if(tiles->GetCell(i,j) == '^') printf("%.5s ",tileData[2]);
-      else if(tiles->GetCell(i,j) == 'v') printf("%.9s ",tileData[3]);
+      else if(tiles->GetCell(i,j) == '^') printf("%.3s ",tileData[2]);
+      else if(tiles->GetCell(i,j) == 'v') printf("%.3s ",tileData[3]);
       else if(tiles->GetCell(i,j) == '>') printf("%.9s ",tileData[4]);
-      else if(tiles->GetCell(i,j) == '"') printf("%.6s",tileData[5]);
-      else if(tiles->GetCell(i,j) == '=') printf("%.3s ",tileData[6]);
+      else if(tiles->GetCell(i,j) == '"') printf("%.3s ",tileData[5]);
+      else if(tiles->GetCell(i,j) == '=') printf("%.9s ",tileData[6]);
       else printf("no valid character match found");
     }
 
@@ -111,13 +111,13 @@ void tileprint(Matrix<char>* tiles, char** tileData){
       //would use switch for readability but not allowed to use break
       //and then we print ending with ,tileData[n] + 12
       //using ansi escape [A for up line and then [C for right on line
-      if(tiles->GetCell(i,j) == '#') printf("%.16s ",tileData[0]+12);
+      if(tiles->GetCell(i,j) == '#') printf("%.9s ",tileData[0]+9);
       else if(tiles->GetCell(i,j) == '0') printf("%.9s ",tileData[1]+9);
-      else if(tiles->GetCell(i,j) == '^') printf("%.9s ",tileData[2]+5);
-      else if(tiles->GetCell(i,j) == 'v') printf("%.9s ",tileData[3]+9);
+      else if(tiles->GetCell(i,j) == '^') printf("%.3s ",tileData[2]+3);
+      else if(tiles->GetCell(i,j) == 'v') printf("%.3s ",tileData[3]+3);
       else if(tiles->GetCell(i,j) == '>') printf("%.9s ",tileData[4]+9);
-      else if(tiles->GetCell(i,j) == '"') printf("%.6s",tileData[5]+6);
-      else if(tiles->GetCell(i,j) == '=') printf("%.3s ",tileData[6]+3);
+      else if(tiles->GetCell(i,j) == '"') printf("%.3s ",tileData[5]+3);
+      else if(tiles->GetCell(i,j) == '=') printf("%.9s ",tileData[6]+9);
       else printf("no valid character match found");
     }
 
