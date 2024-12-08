@@ -1,6 +1,6 @@
 #include <cstdio>
 
-int main(){
+/*int main() {
   FILE* test = fopen("t1", "rb");
   rewind(test);
   int c;
@@ -14,4 +14,4 @@ int main(){
   printf("⎦∵⎣\n⎤ᐜ⎡\n");
 
   return 1;
-}
+}*/
