@@ -81,32 +81,48 @@ void tileprint(Matrix<char>* tiles, char** tileData){
   /*printf("%s",tileData[1]);*/
   /*printf("\033[2A\033[3C");*/
   
-  printf("%.12s",tileData[0]);
-  printf("%.10s",tileData[1]);
-  printf("%.6s\n\033[A\033[9C",tileData[2]);
-  printf("%.10s",tileData[3]);
-  printf("%.10s",tileData[4]);
-  printf("%.8s",tileData[5]);
-  printf("%.3s",tileData[6]);
 /*
+  printf("%.16s",tileData[0]+12);
+  printf("%.9s",tileData[1]+9);
+  printf("%.6s",tileData[2]+6);
+  printf("%.9s",tileData[3]+9);
+  printf("%.9s",tileData[4]+9);
+  printf("%.7s",tileData[5]+7);
+  printf("%.3s",tileData[6]+3);
+  */
   for(int i = 0 ; i < H_SIZE; i++){
     for(int j = 0; j < V_SIZE; j++){
       //would use switch for readability but not allowed to use break
-      //for most we print top with %.12s, however it looks like 2 should be .8s
       //and then we print ending with ,tileData[n] + 12
       //using ansi escape [A for up line and then [C for right on line
-      if(tiles->GetCell(i,j) == '#') printf("%.12s\033[A ",tileData[0]);
-      else if(tiles->GetCell(i,j) == '0') printf("%.10s\033[A ",tileData[1]);
-      else if(tiles->GetCell(i,j) == '^') printf("%.8s\033[A ",tileData[2]);
-      else if(tiles->GetCell(i,j) == 'v') printf("%.6s\033[A ",tileData[3]);
-      else if(tiles->GetCell(i,j) == '>') printf("%.10s\033[A ",tileData[4]);
-      else if(tiles->GetCell(i,j) == '"') printf("%.8s\033[A ",tileData[5]);
-      else if(tiles->GetCell(i,j) == '=') printf("%.3s\033[A ",tileData[6]);
+      if(tiles->GetCell(i,j) == '#') printf("%.12s ",tileData[0]);
+      else if(tiles->GetCell(i,j) == '0') printf("%.9s ",tileData[1]);
+      else if(tiles->GetCell(i,j) == '^') printf("%.5s ",tileData[2]);
+      else if(tiles->GetCell(i,j) == 'v') printf("%.9s ",tileData[3]);
+      else if(tiles->GetCell(i,j) == '>') printf("%.9s ",tileData[4]);
+      else if(tiles->GetCell(i,j) == '"') printf("%.6s",tileData[5]);
+      else if(tiles->GetCell(i,j) == '=') printf("%.3s ",tileData[6]);
       else printf("no valid character match found");
     }
+
+    printf("\n");
+
+    for(int j = 0; j < V_SIZE; j++){
+      //would use switch for readability but not allowed to use break
+      //and then we print ending with ,tileData[n] + 12
+      //using ansi escape [A for up line and then [C for right on line
+      if(tiles->GetCell(i,j) == '#') printf("%.16s ",tileData[0]+12);
+      else if(tiles->GetCell(i,j) == '0') printf("%.9s ",tileData[1]+9);
+      else if(tiles->GetCell(i,j) == '^') printf("%.9s ",tileData[2]+5);
+      else if(tiles->GetCell(i,j) == 'v') printf("%.9s ",tileData[3]+9);
+      else if(tiles->GetCell(i,j) == '>') printf("%.9s ",tileData[4]+9);
+      else if(tiles->GetCell(i,j) == '"') printf("%.6s",tileData[5]+6);
+      else if(tiles->GetCell(i,j) == '=') printf("%.3s ",tileData[6]+3);
+      else printf("no valid character match found");
+    }
+
     printf("\n");
   }
-  */
 }
 
 //function that calls createfromfile for Matrix and graph
@@ -126,9 +142,6 @@ void initMap(graph*& connections, Matrix<char>*& tiles, char* fName, char** tile
 
   //grab the tiles from the files that define them
   initTiles(tileData);
-
-  //marker
-  fprintf(stderr, "tiles Initialized\n");
 
   //read map into tiles and connections
   tiles = createMFromFile(map);
