@@ -25,7 +25,60 @@
 //TILESIZE is the amount of chars in a single tile 
 #define TILESIZE 6
 //reads file and puts connections into graph
-graph* createGFromM(Matrix<char>* str){
+graph* createGFromM(Matrix<char>* mtrx){
+  //cursor
+  char c;
+  //cursor's cursor
+  graph* graff = new graph(SIZE+1);
+  //graph is 380x380
+  //eqn for current
+  //(i*H_SIZE) + j
+  char n;
+  for (int i = 0; i < H_SIZE;i++){ 
+    for (int j = 0; j < V_SIZE; j++) {
+       //still need to add in support for = and "
+      if ((c = mtrx->GetCell(i,j)) == '0' || c == 'v' || c == '^') {
+        for(int k = -1; k < 2; k++){
+          //add catch
+          try{
+            (n = mtrx->GetCell(i-1,j+k));
+            /*fprintf(stderr, "aaa (%d,%d) to  (%d, %d), or at %d in the graph\n",i,j,i-1, j+k, ((i-1) * H_SIZE) + j + k);*/
+
+            //(i-1*H_SIZE) - j + k should give the output 
+            if ( n == '0' || n == 'v' || n == '^' || n == '>')
+              graff->setUndirectedE((i*H_SIZE + j),((i-1) * H_SIZE + j + k),1);
+            else if (n == '=')
+              graff->setUndirectedE((i*H_SIZE + j),((i-1) * H_SIZE + j + k),3);
+          } catch (std::exception &e) {std::cout << "exception: " << e.what() << std::endl;}
+          try{
+            /*fprintf(stderr, "bbb %d,%d\n",i+1,j+k);*/
+            (n = mtrx->GetCell(i+1,j+k));
+            if ( n == '0' || n == 'v' || n == '^' || n == '>')
+              graff->setUndirectedE((i*H_SIZE + j),((i+1) * H_SIZE + j + k),1);
+            else if (n == '=')
+              graff->setUndirectedE((i*H_SIZE + j),((i+1) * H_SIZE + j + k),3);
+          } catch (std::exception &e) {std::cout << "exception: " << e.what() << std::endl;}
+        }
+        try{
+            /*fprintf(stderr, "ccc\n");*/
+          n = mtrx->GetCell(i,j+1);
+            if ( n == '0' || n == 'v' || n == '^' || n == '>')
+              graff->setUndirectedE((i*H_SIZE + j),(i * H_SIZE + j+1 ),1);
+            else if (n == '=')
+              graff->setUndirectedE((i*H_SIZE + j),(i * H_SIZE + j+1 ),3);
+        } catch (std::exception &e) {std::cout << "exception: " << e.what() << std::endl;}
+        try{
+            /*fprintf(stderr, "ddd\n");*/
+          n = mtrx->GetCell(i,j-1);
+            if ( n == '0' || n == 'v' || n == '^' || n == '>')
+              graff->setUndirectedE((i*H_SIZE + j),(i * H_SIZE + j-1 ),1);
+            else if (n == '=')
+              graff->setUndirectedE((i*H_SIZE + j),(i * H_SIZE + j-1 ),3);
+        } catch (std::exception &e) {std::cout << "exception: " << e.what() << std::endl;}
+      }
+    }
+  }
+  graff->display();
   return nullptr;
 }
 
