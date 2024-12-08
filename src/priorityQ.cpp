@@ -1,4 +1,4 @@
-#include "priorityQ.h"
+#include "../include/priorityQ.h"
 
 void priorityQueue::minHeapify(int i, int size) {
 	int left, right, smallest;

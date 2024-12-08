@@ -10,11 +10,10 @@
 #include <iostream> //;w;
 #include <stdexcept> //used by matrix.h
 #include <tuple> //used by main
-#include "matrix.h" //used by graph.h
-#include "priorityQ.h" //used by graph.h
-#include "queue.h" //used by graph.h
-#include "graph.h"
-
+#include "include/matrix.h" //used by graph.h
+#include "include/priorityQ.h" //used by graph.h
+#include "include/queue.h" //used by graph.h
+#include "include/graph.h"
 
 //the defines stay after includes to make sure they are only local and dont override others we may use
 //SIZE is equal to the map side length squared
@@ -79,7 +78,7 @@ void tileprint(Matrix<char>* tiles, char** tileData){
   system("clear");
   /*printf("%s",tileData[1]);*/
   /*printf("\033[2A\033[3C");*/
-  printf("%.8s",tileData[1]);
+  printf("%.8s",tileData[2]);
   for(int i = 0 ; i < H_SIZE; i++){
     for(int j = 0; j < V_SIZE; j++){
       //would use switch for readability but not allowed to use break
@@ -168,7 +167,7 @@ int main(){
   //just here to see if its getting read right
   //segfault :(
   initMap(connectionMatrix, tileMatrix, mapSelect, tileData);
-  return 1;
+  return 0;
 }
 
 //empty space so that i can scroll comfortably, delete when done

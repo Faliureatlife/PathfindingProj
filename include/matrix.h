@@ -2,9 +2,10 @@
 #define MATRIX_H
 
 #include <iostream>
-#include <cfloat> 
+#include <cfloat>
 #include <tuple>
 
+#pragma once
 template <typename T>  
 class Matrix {
 private:
@@ -36,6 +37,30 @@ public:
     Matrix operator*(double x);
     std::tuple<double, int, int> GetMin();
 };
+
+template<typename T>
+Matrix<T>::Matrix(int n1, int m1){
+    n = n1;
+    m = m1;
+    A = new T * [n];
+    for (int i = 0; i < n; i++) {
+        A[i] = new T[m];
+        for (int j = 0; j < m; j++) {
+            A[i][j] = 0;
+        }
+    }
+
+}
+
+template<typename T>
+void Matrix<T>::SetCell(int i, int j, T x){
+    try {
+        A[i][j] = x;
+    }
+    catch (std::exception& e) {
+        std::cout << "Issue with Index: " << e.what() << std::endl;
+    }
+}
 
 #endif
 

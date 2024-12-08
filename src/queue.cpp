@@ -1,4 +1,4 @@
-#include "queue.h"
+#include "../include/queue.h"
 
 queue::queue() {
 	capacity = 0;

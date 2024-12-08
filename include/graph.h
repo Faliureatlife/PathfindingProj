@@ -1,8 +1,10 @@
 /*#include <cstdio>*/
-#include "matrix.h" //allow "normal" array indexing i think*/
+
+#include "matrix.h"
 #include "queue.h"
 #include "priorityQ.h"
 
+#pragma once
 class graph {
 private:
     int n;

@@ -1,5 +1,5 @@
 
-#include "matrix.h"
+#include "../include/matrix.h"
 
 template <typename T>
 void Matrix<T>::Clean() {
@@ -15,7 +15,7 @@ Matrix<T>::Matrix() {
     m = 0;
     A = nullptr;
 }
-
+/*
 template <typename T>
 Matrix<T>::Matrix(int n1, int m1) {
     n = n1;
@@ -28,7 +28,7 @@ Matrix<T>::Matrix(int n1, int m1) {
         }
     }
 }
-
+*/
 template <typename T>
 Matrix<T>::Matrix(const Matrix& M) {
     n = M.n;
@@ -95,7 +95,7 @@ T Matrix<T>::GetCell(int i, int j) {
         std::cout << "Issue with Index: " << e.what() << std::endl;
     }
 }
-
+/*
 template <typename T>
 void Matrix<T>::SetCell(int i, int j, T x) {
     try {
@@ -105,7 +105,7 @@ void Matrix<T>::SetCell(int i, int j, T x) {
         std::cout << "Issue with Index: " << e.what() << std::endl;
     }
 }
-
+*/
 template <typename T>
 double Matrix<T>::operator()(int i, int j) const {
     return A[i][j];

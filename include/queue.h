@@ -1,5 +1,7 @@
 #include <iostream>
+#include <climits>
 
+#pragma once
 class queue {
 private:
 	int front, rear, size;

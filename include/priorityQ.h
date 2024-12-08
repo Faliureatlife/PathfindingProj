@@ -1,10 +1,12 @@
-#include <iostream>
 
+#include <iostream>
+#pragma once
 struct data {
 	int index;
 	double value;
 };
 
+#pragma once
 class priorityQueue {
 private:
 	void minHeapify(int i, int size);
