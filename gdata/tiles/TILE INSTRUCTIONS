@@ -46,15 +46,15 @@ enemy(t4):  E
 ⎦∵⎣
 ⎤ᐜ⎡
 
-end(t5):  G
+end(t5):  >
 ▿▿▿
 ▵▵▵
 
-passage(t6):  S
+passage(t6):  "
 ﹈ ﹈
 ﹇ ﹇
 
-dirt(t7):   D
+dirt(t7):   =
 ൎൎൎ
 ൎൎൎ
 

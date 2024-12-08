@@ -58,15 +58,47 @@ void initTiles(char** tileData){
   char* dir = new char[14];
 
   for(int i = 1;i < 8; i++){
-    //getting cast to 1 instead of '1', needs to be fixed
     sprintf(dir, "gdata/tiles/t%d",i);
     
     //open and read file into correct position in array
-    FILE* tileFile = fopen(dir, "r");
+    FILE* tileFile = fopen(dir, "rb");
     if (tileFile == nullptr) perror("The tile file doesnt exist (yet?)\t");
+    
+    int jter = 0;
+    int c;
+    rewind(tileFile);
+    while (((c = fgetc(tileFile)) != EOF) && jter < 29){
+      tileData[i-1][jter] = c; 
+      jter++;
+    }
     fclose(tileFile);
   }
-  printf("%c\n",tileData[]);
+}
+
+void tileprint(Matrix<char>* tiles, char** tileData){
+  system("clear");
+  /*printf("%s",tileData[1]);*/
+  /*printf("\033[2A\033[3C");*/
+  printf("%.8s",tileData[1]);
+  for(int i = 0 ; i < H_SIZE; i++){
+    for(int j = 0; j < V_SIZE; j++){
+      //would use switch for readability but not allowed to use break
+      /*fprintf(stderr,"get cell at (%d,%d), with value %c \n",i,j, tiles->GetCell(i,j));*/
+      /*
+      //for most we print top with %.12s, however it looks like 2 should be .8s
+      //and then we print ending with ,tileData[n] + 12
+      //using ansi escape [A for up line and then [C for right on line
+      if(tiles->GetCell(i,j) == '#') printf("%s",tileData[0]);
+      else if(tiles->GetCell(i,j) == '0') printf("%s \033[A\033[A",tileData[1]);
+      else if(tiles->GetCell(i,j) == '^') printf("%s \033[A\033[A",tileData[2]);
+      else if(tiles->GetCell(i,j) == 'v') printf("%s \033[A\033[A",tileData[3]);
+      else if(tiles->GetCell(i,j) == '>') printf("%s \033[A\033[A",tileData[4]);
+      else if(tiles->GetCell(i,j) == '"') printf("%s \033[A\033[A",tileData[5]);
+      else if(tiles->GetCell(i,j) == '=') printf("%s \033[A\033[A",tileData[6]);
+      else printf("no valid character match found");
+      */
+    }
+  }
 }
 
 //function that calls createfromfile for Matrix and graph
@@ -92,7 +124,7 @@ void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileDa
 
   //read map into tiles and connections
   tiles = createMFromFile(map);
-  tiles->Display();
+  tileprint(tiles, tileData);
 
   connections = createGFromM(tiles);
   fclose(map);
@@ -102,15 +134,6 @@ void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileDa
 //function to print based off of the map data
 //comment out to hide warnings 
 
-void tileprint(Matrix* tiles, char** tileData){
-  system("clear");
-  for(int i = 0 ; i < V_SIZE; i++){
-    for(int j = 0; j < H_SIZE; j++){
-      for(int c = 0; c < TILESIZE; c++)
-        printf("%c",)
-    }
-  }
-}
 
 //handle movement of player and enemy per turn (may get relocated to djakstra.h and enemy.h respectivly)
 void updatePos(Matrix<char>){
