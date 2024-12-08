@@ -26,16 +26,7 @@
 #define CHARCOUNT 2
 //TILESIZE is the amount of chars in a single tile 
 #define TILESIZE 6
-//reads file and puts connections into graph
 
-
-//function to print based off of the map data
-//comment out to hide warnings 
-
-
-//handle movement of player and enemy per turn (may get relocated to djakstra.h and enemy.h respectivly)
-/*void updatePos(Matrix<char>) {
-}*/
 int main(){
   runner run;
   setlocale(LC_ALL, "en_US.UTF-32");
@@ -45,26 +36,14 @@ int main(){
   for(int i = 0; i < 7; i++) tileData[i] = new char[TILESIZE];
   Matrix<char>* tileMatrix;
   graph* connectionMatrix;
-  //make static char*[5] that contains all the places the maps are located
-  //potentially change last digit of the address in original pointer so we dont need more pointers
+
   printf("Press a number from 1 to 5 and then press enter to select a map ");
 
-  //must be fgets instead of gets because of bufferoverflow reasons (doesnt exist past c++11)
   fgets(mapSelect, CHARCOUNT, stdin);
   printf("%c\n",mapSelect[0]);
   mapSelect[1] = mapSelect[0];
   mapSelect[0] = 'm';
-
-  //for WINDOWS
-  /*system("CLS");*/
-
-  //for LINUX
-  /*system("clear");*/
-
-  //Post-Process will kill EOL/EOF char and make it something like an ('m', int) in order to maintain structure of directory positions
     
-  //just here to see if its getting read right
-  //segfault :(
   run.initMap(connectionMatrix, tileMatrix, mapSelect, tileData);
   return 0;
 }
