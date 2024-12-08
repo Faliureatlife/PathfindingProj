@@ -99,7 +99,7 @@ void tileprint(Matrix<char>* tiles, char** tileData){
       else if(tiles->GetCell(i,j) == '0') printf("%.9s ",tileData[1]);
       else if(tiles->GetCell(i,j) == '^') printf("%.3s ",tileData[2]);
       else if(tiles->GetCell(i,j) == 'v') printf("%.3s ",tileData[3]);
-      else if(tiles->GetCell(i,j) == '>') printf("%.9s ",tileData[4]);
+      else if(tiles->GetCell(i,j) == '>') printf("%.3s ",tileData[4]);
       else if(tiles->GetCell(i,j) == '"') printf("%.3s ",tileData[5]);
       else if(tiles->GetCell(i,j) == '=') printf("%.9s ",tileData[6]);
       else printf("no valid character match found");
@@ -115,7 +115,7 @@ void tileprint(Matrix<char>* tiles, char** tileData){
       else if(tiles->GetCell(i,j) == '0') printf("%.9s ",tileData[1]+9);
       else if(tiles->GetCell(i,j) == '^') printf("%.3s ",tileData[2]+3);
       else if(tiles->GetCell(i,j) == 'v') printf("%.3s ",tileData[3]+3);
-      else if(tiles->GetCell(i,j) == '>') printf("%.9s ",tileData[4]+9);
+      else if(tiles->GetCell(i,j) == '>') printf("%.3s ",tileData[4]+3);
       else if(tiles->GetCell(i,j) == '"') printf("%.3s ",tileData[5]+3);
       else if(tiles->GetCell(i,j) == '=') printf("%.9s ",tileData[6]+9);
       else printf("no valid character match found");
