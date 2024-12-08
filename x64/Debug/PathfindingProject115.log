@@ -1,0 +1,6 @@
+﻿  main.cpp
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(61,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(64,22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(138,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(141,15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  PathfindingProject115.vcxproj -> C:\Users\Mathan\source\repos\PathfindingProj\PathfindingProj.exe
