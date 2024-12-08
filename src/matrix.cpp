@@ -15,7 +15,7 @@ Matrix<T>::Matrix() {
     m = 0;
     A = nullptr;
 }
-/*
+
 template <typename T>
 Matrix<T>::Matrix(int n1, int m1) {
     n = n1;
@@ -28,12 +28,12 @@ Matrix<T>::Matrix(int n1, int m1) {
         }
     }
 }
-*/
+
 template <typename T>
 Matrix<T>::Matrix(const Matrix& M) {
     n = M.n;
     m = M.m;
-    A = new double* [n];
+    A = new T* [n];
     for (int i = 0; i < n; i++) {
         A[i] = new T[m];
         for (int j = 0; j < m; j++) {
@@ -86,16 +86,16 @@ int Matrix<T>::GetCols() const {
     return m;
 }
 
-/*template <typename T>*/
-/*T Matrix<T>::GetCell(int i, int j) {*/
-/*    try {*/
-/*        return A[i][j];*/
-/*    }*/
-/*    catch (std::exception& e) {*/
-/*        std::cout << "Issue with Index: " << e.what() << std::endl;*/
-/*    }*/
-/*}*/
-/*
+template <typename T>
+T Matrix<T>::GetCell(int i, int j) {
+    try {
+        return A[i][j];
+    }
+    catch (std::exception& e) {
+      std::cout << "Issue with Index: " << e.what() << std::endl;
+    }
+}
+
 template <typename T>
 void Matrix<T>::SetCell(int i, int j, T x) {
     try {
@@ -105,14 +105,14 @@ void Matrix<T>::SetCell(int i, int j, T x) {
         std::cout << "Issue with Index: " << e.what() << std::endl;
     }
 }
-*/
+
 template <typename T>
-double Matrix<T>::operator()(int i, int j) const {
+T& Matrix<T>::operator()(int i, int j) {
     return A[i][j];
 }
 
 template <typename T>
-double& Matrix<T>::operator()(int i, int j) {
+T Matrix<T>::operator()(int i, int j) const {
     return A[i][j];
 }
 
@@ -121,9 +121,9 @@ void Matrix<T>::operator=(Matrix& a) {
     Clean();
     n = a.n;
     m = a.m;
-    A = new double* [n];
+    A = new T* [n];
     for (int i = 0; i < n; i++) {
-        A[i] = new double[m];
+        A[i] = new T[m];
         for (int j = 0; j < m; j++) {
             A[i][j] = a.A[i][j];
         }
@@ -247,3 +247,4 @@ std::tuple<double, int, int> Matrix<T>::GetMin() {
     return std::make_tuple(minVal, argi, argj);
 }
 
+template class Matrix<char>;

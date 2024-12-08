@@ -1,6 +1,51 @@
 ﻿  main.cpp
-C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(61,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(64,22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(138,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(141,15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(114,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(117,22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(191,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\main.cpp(194,15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  graph.cpp
+  matrix.cpp
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(160,33): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(160,33): warning C4244:         with
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(160,33): warning C4244:         [
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(160,33): warning C4244:             T=char
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(160,33): warning C4244:         ]
+  C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(160,33):
+  the template instantiation context (the oldest one first) is
+  	C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(250,28):
+  	see reference to class template instantiation 'Matrix<char>' being compiled
+  	C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(156,42):
+  	while compiling class template member function 'Matrix<char> Matrix<char>::operator +(double)'
+  
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(193,39): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(193,39): warning C4244:         with
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(193,39): warning C4244:         [
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(193,39): warning C4244:             T=char
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(193,39): warning C4244:         ]
+  C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(193,39):
+  the template instantiation context (the oldest one first) is
+  	C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(189,42):
+  	while compiling class template member function 'Matrix<char> Matrix<char>::operator -(double)'
+  
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(227,39): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(227,39): warning C4244:         with
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(227,39): warning C4244:         [
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(227,39): warning C4244:             T=char
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(227,39): warning C4244:         ]
+  C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(227,39):
+  the template instantiation context (the oldest one first) is
+  	C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(223,42):
+  	while compiling class template member function 'Matrix<char> Matrix<char>::operator *(double)'
+  
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(214,31): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(214,31): warning C4244:         with
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(214,31): warning C4244:         [
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(214,31): warning C4244:             T=char
+C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(214,31): warning C4244:         ]
+  C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(214,31):
+  the template instantiation context (the oldest one first) is
+  	C:\Users\Mathan\source\repos\PathfindingProj\pathfindingproj\src\matrix.cpp(200,43):
+  	while compiling class template member function 'Matrix<char> Matrix<char>::operator *(Matrix<char> &)'
+  
+  Generating Code...
   PathfindingProject115.vcxproj -> C:\Users\Mathan\source\repos\PathfindingProj\PathfindingProj.exe
