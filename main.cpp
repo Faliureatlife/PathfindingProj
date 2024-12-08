@@ -78,26 +78,33 @@ void tileprint(Matrix<char>* tiles, char** tileData){
   system("clear");
   /*printf("%s",tileData[1]);*/
   /*printf("\033[2A\033[3C");*/
-  printf("%.8s",tileData[2]);
+  
+  printf("%.12s",tileData[0]);
+  printf("%.10s",tileData[1]);
+  printf("%.6s\n\033[A\033[9C",tileData[2]);
+  printf("%.10s",tileData[3]);
+  printf("%.10s",tileData[4]);
+  printf("%.8s",tileData[5]);
+  printf("%.3s",tileData[6]);
+/*
   for(int i = 0 ; i < H_SIZE; i++){
     for(int j = 0; j < V_SIZE; j++){
       //would use switch for readability but not allowed to use break
-      /*fprintf(stderr,"get cell at (%d,%d), with value %c \n",i,j, tiles->GetCell(i,j));*/
-      /*
       //for most we print top with %.12s, however it looks like 2 should be .8s
       //and then we print ending with ,tileData[n] + 12
       //using ansi escape [A for up line and then [C for right on line
-      if(tiles->GetCell(i,j) == '#') printf("%s",tileData[0]);
-      else if(tiles->GetCell(i,j) == '0') printf("%s \033[A\033[A",tileData[1]);
-      else if(tiles->GetCell(i,j) == '^') printf("%s \033[A\033[A",tileData[2]);
-      else if(tiles->GetCell(i,j) == 'v') printf("%s \033[A\033[A",tileData[3]);
-      else if(tiles->GetCell(i,j) == '>') printf("%s \033[A\033[A",tileData[4]);
-      else if(tiles->GetCell(i,j) == '"') printf("%s \033[A\033[A",tileData[5]);
-      else if(tiles->GetCell(i,j) == '=') printf("%s \033[A\033[A",tileData[6]);
+      if(tiles->GetCell(i,j) == '#') printf("%.12s\033[A ",tileData[0]);
+      else if(tiles->GetCell(i,j) == '0') printf("%.10s\033[A ",tileData[1]);
+      else if(tiles->GetCell(i,j) == '^') printf("%.8s\033[A ",tileData[2]);
+      else if(tiles->GetCell(i,j) == 'v') printf("%.6s\033[A ",tileData[3]);
+      else if(tiles->GetCell(i,j) == '>') printf("%.10s\033[A ",tileData[4]);
+      else if(tiles->GetCell(i,j) == '"') printf("%.8s\033[A ",tileData[5]);
+      else if(tiles->GetCell(i,j) == '=') printf("%.3s\033[A ",tileData[6]);
       else printf("no valid character match found");
-      */
     }
+    printf("\n");
   }
+  */
 }
 
 //function that calls createfromfile for Matrix and graph
@@ -139,7 +146,7 @@ void updatePos(Matrix<char>){
 }
 
 int main(){
-  /*setlocale(LC_ALL, "en_US.UTF-16");*/
+  setlocale(LC_ALL, "en_US.UTF-32");
   char* mapSelect = new char[CHARCOUNT]; //make sure that gets doesnt overflow with the \0 at the end
   //7 is number of types of tile, 6 is characters per tile
   char** tileData = new char*[7];

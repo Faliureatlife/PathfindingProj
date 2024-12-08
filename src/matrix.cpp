@@ -86,15 +86,15 @@ int Matrix<T>::GetCols() const {
     return m;
 }
 
-template <typename T>
-T Matrix<T>::GetCell(int i, int j) {
-    try {
-        return A[i][j];
-    }
-    catch (std::exception& e) {
-        std::cout << "Issue with Index: " << e.what() << std::endl;
-    }
-}
+/*template <typename T>*/
+/*T Matrix<T>::GetCell(int i, int j) {*/
+/*    try {*/
+/*        return A[i][j];*/
+/*    }*/
+/*    catch (std::exception& e) {*/
+/*        std::cout << "Issue with Index: " << e.what() << std::endl;*/
+/*    }*/
+/*}*/
 /*
 template <typename T>
 void Matrix<T>::SetCell(int i, int j, T x) {

@@ -37,7 +37,7 @@ public:
     Matrix operator*(double x);
     std::tuple<double, int, int> GetMin();
 };
-
+//functions dont work in main unless placed here for some strange reason
 template<typename T>
 Matrix<T>::Matrix(int n1, int m1){
     n = n1;
@@ -49,7 +49,6 @@ Matrix<T>::Matrix(int n1, int m1){
             A[i][j] = 0;
         }
     }
-
 }
 
 template<typename T>
@@ -62,6 +61,15 @@ void Matrix<T>::SetCell(int i, int j, T x){
     }
 }
 
+template <typename T>
+T Matrix<T>::GetCell(int i, int j) {
+    try {
+        return A[i][j];
+    }
+    catch (std::exception& e) {
+        std::cout << "Issue with Index: " << e.what() << std::endl;
+    }
+}
 #endif
 
 /*
