@@ -15,6 +15,7 @@
 #include "include/queue.h" //used by graph.h
 #include "include/graph.h"
 
+
 //the defines stay after includes to make sure they are only local and dont override others we may use
 //SIZE is equal to the map side length squared
 #define SIZE 380
@@ -74,8 +75,9 @@ void initTiles(char** tileData){
   }
 }
 
+
 void tileprint(Matrix<char>* tiles, char** tileData){
-  system("clear");
+  system("cls");
   /*printf("%s",tileData[1]);*/
   /*printf("\033[2A\033[3C");*/
   
@@ -109,7 +111,7 @@ void tileprint(Matrix<char>* tiles, char** tileData){
 
 //function that calls createfromfile for Matrix and graph
 //if pointers don't work then return as enum <graph,Matrix>
-void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileData){
+void initMap(graph*& connections, Matrix<char>*& tiles, char* fName, char** tileData){
   //doesnt print unless specified to where
   //"gdata/maps/"
   char* dir = new char[CHARCOUNT + 11];
@@ -142,10 +144,10 @@ void initMap(graph* connections, Matrix<char>* tiles, char* fName, char** tileDa
 
 
 //handle movement of player and enemy per turn (may get relocated to djakstra.h and enemy.h respectivly)
-void updatePos(Matrix<char>){
-}
-
+/*void updatePos(Matrix<char>) {
+}*/
 int main(){
+  
   setlocale(LC_ALL, "en_US.UTF-32");
   char* mapSelect = new char[CHARCOUNT]; //make sure that gets doesnt overflow with the \0 at the end
   //7 is number of types of tile, 6 is characters per tile
@@ -155,7 +157,7 @@ int main(){
   graph* connectionMatrix;
   //make static char*[5] that contains all the places the maps are located
   //potentially change last digit of the address in original pointer so we dont need more pointers
-  printf("Press a number from 1 to 5 and then press enter to select a map");
+  printf("Press a number from 1 to 5 and then press enter to select a map ");
 
   //must be fgets instead of gets because of bufferoverflow reasons (doesnt exist past c++11)
   fgets(mapSelect, CHARCOUNT, stdin);

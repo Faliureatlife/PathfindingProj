@@ -1,0 +1,8 @@
+
+#: wall
+0: empty
+^: player start
+v: enemy start
+=: dirt
+>: end
+": passage
