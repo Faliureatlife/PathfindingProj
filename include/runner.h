@@ -25,6 +25,7 @@
 class runner {
 public:
     graph* createGFromM(Matrix<char>* mtrx, int* entPos);
+    graph* createGFromM2(Matrix<char>* mtrx, int* entPos);
 
     //reads file and stores the tile type at each point
     //if dealing with ints for tile tracking is too much then implement Matrix template<T>
@@ -39,7 +40,7 @@ public:
     //function that calls createfromfile for Matrix and graph
     //if pointers don't work then return as enum <graph,Matrix>
     void initMap(graph*& connections, Matrix<char>*& tiles, char* fName, char** tileData, int*& entData);
-    void runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData, int*& entData);
+    void runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData, int*& entData, int mode);
 
     int moveEnt(Matrix<char>*& tiles, Matrix<char>*& tiles2,int* endIndic, char entType, int i1, int j1, int i2, int j2);
 };

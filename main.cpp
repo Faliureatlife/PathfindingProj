@@ -31,8 +31,11 @@
 int main(){
   runner run;
   setlocale(LC_ALL, "en_US.UTF-32");
-  system("chcp 65001");
+  #if _WIN32
+    system("chcp 65001");
+  #endif
   char* mapSelect = new char[CHARCOUNT]; //make sure that gets doesnt overflow with the \0 at the end
+  char* modeSelect = new char[CHARCOUNT];
   //7 is number of types of tile, 6 is characters per tile
   char** tileData = new char*[7];
   for(int i = 0; i < 7; i++) tileData[i] = new char[TILESIZE];
@@ -40,27 +43,34 @@ int main(){
   graph* connectionMatrix;
   int* entData;
 
-  printf("Press a number from 1 to 2 and then press enter to select mode: \n");
-  
-  printf("Press a number from 1 to 5 and then press enter to select a map: ");
-  fgets(mapSelect, CHARCOUNT, stdin);
+  printf("Choose a difficulty: 1 for easy or 2 for hard, and then press enter to select mode: \n");
+  fgets(modeSelect, CHARCOUNT, stdin);
+  while(modeSelect[0] != '1' && modeSelect[0] != '2'){
+    printf("Invalid Mode Number");
+    /*while (getchar() != '\n');*/
+    printf("Press a number from 1 to 5 and then press enter to select a map: ");
+    fgets(mapSelect, CHARCOUNT, stdin);
+}
+  /*printf("Press a number from 1 to 5 and then press enter to select a map: ");*/
+  /*fgets(mapSelect, CHARCOUNT, stdin);*/
 
   // Validate input to ensure it is between '1' and '5'
   while (mapSelect[0] < '1' || mapSelect[0] > '5') {
-      printf("Invalid Map Number\n");
       while (getchar() != '\n');
       printf("Press a number from 1 to 5 and then press enter to select a map: ");
       fgets(mapSelect, CHARCOUNT, stdin);
+      printf("Invalid Map Number\n");
   }
 
-  printf("%c\n",mapSelect[0]);
+  /*printf("%c\n",mapSelect[0]);*/
+
   mapSelect[1] = mapSelect[0];
   mapSelect[0] = 'm';
 
 
   run.initMap(connectionMatrix, tileMatrix, mapSelect, tileData, entData);
 
-  run.runLoop(connectionMatrix,tileMatrix,tileData,entData);
+  run.runLoop(connectionMatrix,tileMatrix,tileData,entData, modeSelect[0]);
 
   delete tileData;
   delete mapSelect;
