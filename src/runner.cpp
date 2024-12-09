@@ -1,7 +1,7 @@
 
 #include "../include/runner.h"
 
-graph* runner::createGFromM(Matrix<char>* mtrx, int* entPos ) {
+graph* runner::createGFromM(Matrix<char>* mtrx, int* entPos) {
     //cursor
     char c;
     //cursor's cursor
@@ -14,23 +14,25 @@ graph* runner::createGFromM(Matrix<char>* mtrx, int* entPos ) {
     for (int i = 0; i < H_SIZE; i++) {
         for (int j = 0; j < V_SIZE; j++) {
             //still need to add in support for = and "
-            if ((c = mtrx->GetCell(i, j)) == '0' || c == 'v' || c == '^') {
+            c = mtrx->GetCell(i, j);
+            if ( c == '0' || c == 'v' || c == '^') {
                 if (c == 'v') {
-                entPos[1+ecnt] = 1;
-                ecnt++;
-                } else if (c == '^') entPos[0] == 1;
+                  entPos[1+ecnt] = (i * H_SIZE + j);
+                  ecnt++;
+                } else if(c == '^'){
+                    entPos[0] = (i * H_SIZE + j);
+                }
                 for (int k = -1; k < 2; k++) {
-                    //add catch
+                      //add catch
                     try {
                         (n = mtrx->GetCell(i - 1, j + k));
-                        /*fprintf(stderr, "aaa (%d,%d) to  (%d, %d), or at %d in the graph\n",i,j,i-1, j+k, ((i-1) * H_SIZE) + j + k);*/
-
-                        //(i-1*H_SIZE) - j + k should give the output 
+                          /*fprintf(stderr, "aaa (%d,%d) to  (%d, %d), or at %d in the graph\n",i,j,i-1, j+k, ((i-1) * H_SIZE) + j + k);*/
+                          //(i-1*H_SIZE) - j + k should give the output 
                         if (n == '0' || n == 'v' || n == '^' || n == '>')
                             graff->setUndirectedE((i * H_SIZE + j), ((i - 1) * H_SIZE + j + k), 1);
                         else if (n == '=')
                             graff->setUndirectedE((i * H_SIZE + j), ((i - 1) * H_SIZE + j + k), 3);
-                    }
+                      }
                     catch (std::exception& e) { std::cout << "exception: " << e.what() << std::endl; }
                     try {
                         /*fprintf(stderr, "bbb %d,%d\n",i+1,j+k);*/
@@ -63,6 +65,7 @@ graph* runner::createGFromM(Matrix<char>* mtrx, int* entPos ) {
             }
         }
     }
+    for (int k = 0; k < 4; k++ ) fprintf(stderr,"%d\n",entPos[k]);
     return graff;
 }
 
@@ -114,7 +117,7 @@ void runner::initTiles(char** tileData) {
 
 void runner::tileprint(Matrix<char>* tiles, char** tileData) {
   #if __linux__
-    system("clear"); //look man i use linux okay
+    system("clear -x"); //look man i use linux okay
   #elif _WIN32
     system("CLS");
   #endif
@@ -174,46 +177,60 @@ void runner::initMap(graph*& connections, Matrix<char>*& tiles, char* fName, cha
     //read map into tiles and connections
     tiles = createMFromFile(map);
     tileprint(tiles, tileData);
+    
+    entData = new int[4];
 
     connections = createGFromM(tiles,entData);
 }
 
 //will need to sum up weight of movement and return score
-int runner::moveEnt(Matrix<char>*& tiles, Matrix<char>*& tiles,char entType, int i1, int j1, int i2, int j2){
-  int score;
-  if{i1 >= H_SIZE || i2 >= H_SIZE || j1 >= V_SIZE || j2 >= V_SIZE} fprintf(stderr, "invalid move position\n");
+int runner::moveEnt(Matrix<char>*& tiles, Matrix<char>*& tiles2, int* endIndic, char entType, int i1, int j1, int i2, int j2){
+  int score = 0;
+  if(i1 >= H_SIZE || i2 >= H_SIZE || j1 >= V_SIZE || j2 >= V_SIZE)
+    fprintf(stderr, "Invalid move position: Tried to move from (%d,%d) to (%d,%d) \n", i1,j1,i2,j2);
+
   int c = tiles->GetCell(i2,j2);
-  if (c == '0') {
-    tiles->SetCell(i2,j2,entType);
-    tiles->SetCell(i1,j1,c);
+  int h;
+  if (c == '0') {//if moving onto empty
+    tiles->SetCell(i2,j2,entType);//set the empty to the type
+    tiles->SetCell(i1,j1,'0');//then set it to empty 
     score = 1;
+    tiles->Display();
   } else if (c == '=') {
     tiles->SetCell(i2,j2,entType);
-    tiles->SetCell(i1,j1,c);
+    if((h = tiles->GetCell(i1,j1)) == '^' || h == 'v'){
+      tiles->SetCell(i1,j1,'=');
+    }
     score = 3;
+  } else if (c == '>'){
+    *endIndic = 1;
   }
-  if (entType == 'v' && c == '^') score = 500;
+  if (entType == 'v' && c == '^') *endIndic = -1;
   return score;
 }
 
 void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData, int*& entData){
-  Matrix<char>* m2 = Matrix(tiles);
+  Matrix<char>* m2(tiles);
   int endIndic = 0;
-  //if win then 1, if lose then - 1
-  while (endInic == 0){
+  int score = 0;
+  //if win then 1, if lose then -1
+  while (endIndic == 0){
     connections = createGFromM(tiles, entData);
     tileprint(tiles,tileData);
     //2 bc windows terminal is 2 bytes (char is one byte)
     char* inputBuf = new char[2];
-    printf("\n\n Press {w,a,s,d} followed by enter to move \n Or press space+enter to skip turn");
+    printf("\n\n Press {w,a,s,d} followed by enter to move \n Or press space+enter to skip turn\033[34D\n\n");
     fgets(inputBuf, 2, stdin);
     //make sure H and V aren't swapped 
-    if(inputBuf[0] == w) score += moveEnt(tiles, m2, entData[0] / H_SIZE, entData[0] % V_SIZE, (entData[0] / H_SIZE) - 1, (entData[0] / H_SIZE));
-    else if(inputBuf[0] == s) score += moveEnt(tiles, m2, entData[0] / H_SIZE, entData[0] % V_SIZE, (entData[0] / H_SIZE) + 1, (entData[0] / H_SIZE));
-    else if(inputBuf[0] == a) score += moveEnt(tiles, m2, entData[0] / H_SIZE, entData[0] % V_SIZE, (entData[0] / H_SIZE), (entData[0] / H_SIZE) - 1);
-    else if(inputBuf[0] == d) score += moveEnt(tiles, m2, entData[0] / H_SIZE, entData[0] % V_SIZE, (entData[0] / H_SIZE), (entData[0] / H_SIZE + 1));
+    if(inputBuf[0] == 'w') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE) - 1, (entData[0] % H_SIZE));
+    else if(inputBuf[0] == 's') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE) + 1, (entData[0] % H_SIZE));
+    else if(inputBuf[0] == 'a') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE), (entData[0] % H_SIZE) - 1);
+    else if(inputBuf[0] == 'd') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE), (entData[0] % H_SIZE + 1));
+    for(int i = 1; i < 4; i++){
+    }
 
   }
+  if (endIndic == 1) printf("Wowzers you did it!                      \nScore: %d\n",score);
   //make matrix into graph
   //print matrix
   //prompt user to move {w,a,s,d} + enter

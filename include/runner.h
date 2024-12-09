@@ -40,4 +40,6 @@ public:
     //if pointers don't work then return as enum <graph,Matrix>
     void initMap(graph*& connections, Matrix<char>*& tiles, char* fName, char** tileData, int*& entData);
     void runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData, int*& entData);
+
+    int moveEnt(Matrix<char>*& tiles, Matrix<char>*& tiles2,int* endIndic, char entType, int i1, int j1, int i2, int j2);
 };

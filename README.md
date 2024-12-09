@@ -4,43 +4,43 @@ git add -A //adds all changed files                      \
 git commit -m "message" //adds the commit comment/logs   \
 git push //pushes to main                                
 
-Name: Nick Martinez ID: 301776242
+Name: Nick Martinez ID: 301776242 \
 Name: Mathan Ramos ID: 301632215
 
-Files:
-├── gdata
-│   ├── maps
-│   │   ├── All Maps
-│   │   ├── identities
-│   │   ├── m1
-│   │   ├── m2
-│   │   ├── m3
-│   │   ├── m4
-│   │   └── m5
-│   └── tiles
-│       ├── t1
-│       ├── t2
-│       ├── t3
-│       ├── t4
-│       ├── t5
-│       ├── t6
-│       ├── t7
-│       └── TILE INSTRUCTIONS
-├── include
-│   ├── graph.h
-│   ├── matrix.h
-│   ├── priorityQ.h
-│   ├── queue.h
-│   └── runner.h
-├── main.cpp
-├── Makefile
-├── README.md
-└── src
-    ├── graph.cpp
-    ├── matrix.cpp
-    ├── priorityQ.cpp
-    ├── queue.cpp
-    └── runner.cpp
+Files: \
+├── gdata \
+│   ├── maps \
+│   │   ├── All Maps \
+│   │   ├── identities \
+│   │   ├── m1 \
+│   │   ├── m2 \
+│   │   ├── m3 \
+│   │   ├── m4 \
+│   │   └── m5 \
+│   └── tiles \
+│       ├── t1 \
+│       ├── t2 \
+│       ├── t3 \
+│       ├── t4 \
+│       ├── t5 \
+│       ├── t6 \
+│       ├── t7 \
+│       └── TILE INSTRUCTIONS \
+├── include \
+│   ├── graph.h \
+│   ├── matrix.h \
+│   ├── priorityQ.h \
+│   ├── queue.h \
+│   └── runner.h \
+├── main.cpp \
+├── Makefile \
+├── README.md \
+└── src \
+    ├── graph.cpp \
+    ├── matrix.cpp \
+    ├── priorityQ.cpp \
+    ├── queue.cpp \
+    └── runner.cpp \
 
 Gameplay:
 Player spawns in a maze surrounded by walls with the goal of going to the winwin tile, which ends the game. 

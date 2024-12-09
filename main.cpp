@@ -59,7 +59,7 @@ int main(){
 
   run.initMap(connectionMatrix, tileMatrix, mapSelect, tileData, entData);
 
-  run.runLoop()
+  run.runLoop(connectionMatrix,tileMatrix,tileData,entData);
 
   return 0;
 }
