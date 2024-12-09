@@ -119,12 +119,11 @@ void graph::displayUndirected() {
 }
 
 void graph::dijkstra(int s, double*& d, int*& pi) {
-    d = new double[n];
-    pi = new int[n];
     priorityQueue* V = new priorityQueue(n);
     queue* S = new queue(n);
     for (int u = 0; u < n; u++) {
-        d[u] = DBL_MAX;
+        d[u] = 100;
+      fprintf(stderr, "IM CHECKING \n");
         pi[u] = -1;
     }
     d[s] = 0;

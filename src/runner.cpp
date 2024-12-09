@@ -211,8 +211,11 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
   Matrix<char>* m2(tiles);
   int endIndic = 0;
   int score = 0;
-  double** dist;
-  int** pred;
+  double** dist = new double*[3];
+  for(int i = 0; i < SIZE; i++) dist[i] = new double[SIZE];
+  int** pred = new int*[3];
+  for(int i = 0; i < SIZE; i++) pred[i] = new int[SIZE];
+
 
   //if win then 1, if lose then -1
   while (endIndic == 0){
@@ -227,14 +230,18 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
     else if(inputBuf[0] == 's') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE) + 1, (entData[0] % H_SIZE));
     else if(inputBuf[0] == 'a') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE), (entData[0] % H_SIZE) - 1);
     else if(inputBuf[0] == 'd') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE), (entData[0] % H_SIZE + 1));
+    //entData enemies are 1..3, dist & pred are double[double[]] and int[int[]]
+    //pred might be removable
     for(int i = 1; i < 4; i++){
+      connections->dijkstra(entData[i],dist[i-1],pred[i-1]);
+
       
     }
     inputBuf[0] = ' ';
     printf("\n");
 
   }
-  if (endIndic == 1) printf("Wowzers you did it!                      \nScore: %d\n",score);
+  if (endIndic == 1) printf("Wowzers you did it!                      \nScore(Lower is better): %d\n",score);
   //make matrix into graph
   //print matrix
   //prompt user to move {w,a,s,d} + enter
