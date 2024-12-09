@@ -51,8 +51,6 @@ int main(){
     printf("Press a number from 1 to 5 and then press enter to select a map: ");
     fgets(mapSelect, CHARCOUNT, stdin);
 }
-  /*printf("Press a number from 1 to 5 and then press enter to select a map: ");*/
-  /*fgets(mapSelect, CHARCOUNT, stdin);*/
 
   // Validate input to ensure it is between '1' and '5'
   while (mapSelect[0] < '1' || mapSelect[0] > '5') {
@@ -62,7 +60,6 @@ int main(){
       printf("Invalid Map Number\n");
   }
 
-  /*printf("%c\n",mapSelect[0]);*/
 
   mapSelect[1] = mapSelect[0];
   mapSelect[0] = 'm';

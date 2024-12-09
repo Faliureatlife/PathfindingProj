@@ -329,12 +329,11 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
         //good is x = (i * 20) + j
         //x = (i * 20) + (x - (x % ))
         int cursor = ((( entData[0] - (entData[0] % H_SIZE)) / H_SIZE) * V_SIZE) + ( entData[0] % H_SIZE );
-
         int timeoutCount = 0;
-        while(pred[i-1][cursor] != entData[i] && timeoutCount < SIZE){
+        while (cursor != -1 &&  pred[i - 1][cursor] != entData[i] && timeoutCount < SIZE) {
           /*printf("trying to reach %d:  %d --> %d\n",entData[i], cursor, pred[i-1][cursor]);*/
-          
-          cursor = pred[i-1][cursor];
+
+		  cursor = pred[i - 1][cursor];
           timeoutCount++;
         }
         //check to make sure exit was due to finding end and not due to timeout
@@ -352,7 +351,8 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
       printf("\n");
 
     }
-    if (endIndic == 1) printf("Good job on completing the level, you did it!                      \nScore(Lower is better): %d\n",score);
+    if (endIndic == 1) printf("Good job on completing the trial, you did it!                      \nScore(Lower is better): %d\n", score);
+    else printf("You got caught by an enemy ... better luck next time!");
 
   } else if (mode == '2'){ 
     Matrix<char>* m2(tiles);
@@ -427,7 +427,8 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
       printf("\n");
 
     }
-    if (endIndic == 1) printf("Wowzers you did it!                      \nScore(Lower is better): %d\n",score);
+    if (endIndic == 1) printf("Good job on completing the trial, you did it!                      \nScore(Lower is better): %d\n", score);
+    else printf("You got caught by an enemy ... better luck next time!");
   }
   
 
