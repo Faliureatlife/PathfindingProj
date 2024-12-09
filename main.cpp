@@ -37,6 +37,9 @@ int main(){
   for(int i = 0; i < 7; i++) tileData[i] = new char[TILESIZE];
   Matrix<char>* tileMatrix;
   graph* connectionMatrix;
+
+  printf("Press a number from 1 to 2 and then press enter to select mode: \n");
+
   
   printf("Press a number from 1 to 5 and then press enter to select a map: ");
   fgets(mapSelect, CHARCOUNT, stdin);
