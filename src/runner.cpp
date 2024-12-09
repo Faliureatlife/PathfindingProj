@@ -17,49 +17,47 @@ graph* runner::createGFromM(Matrix<char>* mtrx, int* entPos) {
             c = mtrx->GetCell(i, j);
             if ( c == '0' || c == 'v' || c == '^') {
                 if (c == 'v') {
-                  entPos[1+ecnt] = (i * H_SIZE + j);
+                  entPos[1+ecnt] = (i * V_SIZE + j);
                   ecnt++;
                 } else if(c == '^'){
                     entPos[0] = (i * H_SIZE + j);
                 }
-                for (int k = -1; k < 2; k++) {
-                      //add catch
-                    try {
-                        (n = mtrx->GetCell(i - 1, j + k));
-                          /*fprintf(stderr, "aaa (%d,%d) to  (%d, %d), or at %d in the graph\n",i,j,i-1, j+k, ((i-1) * H_SIZE) + j + k);*/
-                          //(i-1*H_SIZE) - j + k should give the output 
-                        if (n == '0' || n == 'v' || n == '^' || n == '>')
-                            graff->setUndirectedE((i * H_SIZE + j), ((i - 1) * H_SIZE + j + k), 1);
-                        else if (n == '=')
-                            graff->setUndirectedE((i * H_SIZE + j), ((i - 1) * H_SIZE + j + k), 3);
-                      }
-                    catch (std::exception& e) { std::cout << "exception: " << e.what() << std::endl; }
-                    try {
-                        /*fprintf(stderr, "bbb %d,%d\n",i+1,j+k);*/
-                        (n = mtrx->GetCell(i + 1, j + k));
-                        if (n == '0' || n == 'v' || n == '^' || n == '>')
-                            graff->setUndirectedE((i * H_SIZE + j), ((i + 1) * H_SIZE + j + k), 1);
-                        else if (n == '=')
-                            graff->setUndirectedE((i * H_SIZE + j), ((i + 1) * H_SIZE + j + k), 3);
+                    //add catch
+                  try {
+                      (n = mtrx->GetCell(i - 1, j ));
+                        /*fprintf(stderr, "aaa (%d,%d) to  (%d, %d), or at %d in the graph\n",i,j,i-1, j+k, ((i-1) * H_SIZE) + j + k);*/
+                        //(i-1*H_SIZE) - j + k should give the output 
+                      if (n == '0' || n == 'v' || n == '^' || n == '>')
+                          graff->setUndirectedE((i * V_SIZE + j), ((i - 1) * V_SIZE + j), 1);
+                      else if (n == '=')
+                          graff->setUndirectedE((i * V_SIZE + j), ((i - 1) * V_SIZE + j), 3);
                     }
-                    catch (std::exception& e) { std::cout << "exception: " << e.what() << std::endl; }
-                }
+                  catch (std::exception& e) { std::cout << "exception: " << e.what() << std::endl; }
+                  try {
+                      /*fprintf(stderr, "bbb %d,%d\n",i+1,j+k);*/
+                      (n = mtrx->GetCell(i + 1, j));
+                      if (n == '0' || n == 'v' || n == '^' || n == '>')
+                          graff->setUndirectedE((i * V_SIZE + j), ((i + 1) * V_SIZE + j), 1);
+                      else if (n == '=')
+                          graff->setUndirectedE((i * V_SIZE + j), ((i + 1) * V_SIZE + j), 3);
+                  }
+                  catch (std::exception& e) { std::cout << "exception: " << e.what() << std::endl; }
                 try {
                     /*fprintf(stderr, "ccc\n");*/
                     n = mtrx->GetCell(i, j + 1);
                     if (n == '0' || n == 'v' || n == '^' || n == '>')
-                        graff->setUndirectedE((i * H_SIZE + j), (i * H_SIZE + j + 1), 1);
+                        graff->setUndirectedE((i * V_SIZE + j), (i * V_SIZE + j + 1), 1);
                     else if (n == '=')
-                        graff->setUndirectedE((i * H_SIZE + j), (i * H_SIZE + j + 1), 3);
+                        graff->setUndirectedE((i * V_SIZE + j), (i * V_SIZE + j + 1), 3);
                 }
                 catch (std::exception& e) { std::cout << "exception: " << e.what() << std::endl; }
                 try {
                     /*fprintf(stderr, "ddd\n");*/
                     n = mtrx->GetCell(i, j - 1);
                     if (n == '0' || n == 'v' || n == '^' || n == '>')
-                        graff->setUndirectedE((i * H_SIZE + j), (i * H_SIZE + j - 1), 1);
+                        graff->setUndirectedE((i * V_SIZE + j), (i * V_SIZE + j - 1), 1);
                     else if (n == '=')
-                        graff->setUndirectedE((i * H_SIZE + j), (i * H_SIZE + j - 1), 3);
+                        graff->setUndirectedE((i * V_SIZE + j), (i * V_SIZE + j - 1), 3);
                 }
                 catch (std::exception& e) { std::cout << "exception: " << e.what() << std::endl; }
             }
@@ -175,7 +173,6 @@ void runner::initMap(graph*& connections, Matrix<char>*& tiles, char* fName, cha
 
     //read map into tiles and connections
     tiles = createMFromFile(map);
-    tileprint(tiles, tileData);
     
     entData = new int[4];
 
@@ -211,15 +208,23 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
   Matrix<char>* m2(tiles);
   int endIndic = 0;
   int score = 0;
-  double** dist = new double*[3];
-  for(int i = 0; i < SIZE; i++) dist[i] = new double[SIZE];
-  int** pred = new int*[3];
-  for(int i = 0; i < SIZE; i++) pred[i] = new int[SIZE];
+  //should only need to be double*[3] but on windows results in access violation
+  //therefore we give windows a double*[SIZE] because thats what works (unclear why)
+  #if __linux__
+    double** dist = new double*[3];
+    for(int i = 0; i < SIZE; i++) dist[i] = new double[SIZE];
+    int** pred = new int*[3];
+    for(int i = 0; i < SIZE; i++) pred[i] = new int[SIZE];
+  #elif _WIN32
+    double** dist = new double*[SIZE];
+    for(int i = 0; i < SIZE; i++) dist[i] = new double[SIZE];
+    int** pred = new int*[SIZE];
+    for(int i = 0; i < SIZE; i++) pred[i] = new int[SIZE];
+  #endif
 
 
   //if win then 1, if lose then -1
   while (endIndic == 0){
-    connections = createGFromM(tiles, entData);
     tileprint(tiles,tileData);
     //2 bc windows terminal is 2 bytes (char is one byte)
     char* inputBuf = new char[2];
@@ -235,8 +240,37 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
     for(int i = 1; i < 4; i++){
       connections->dijkstra(entData[i],dist[i-1],pred[i-1]);
     }
-    for(int i = 1; i < 4; i++){
-      
+    printf("\n");
+    //print out enemy locations
+    connections = createGFromM(tiles, entData);
+
+    for (int i = 1; i < 4; i++){
+      //math underneath, disregard
+      //(x - (x % 19)) / i = j
+      //x = entData[0]
+      //good is x = (i * 20) + j
+      //x = (i * 20) + (x - (x % ))
+      int cursor = ((( entData[0] - (entData[0] % H_SIZE)) / H_SIZE) * V_SIZE) + ( entData[0] % H_SIZE );
+
+      int timeoutCount = 0;
+      while(pred[i-1][cursor] != entData[i] && timeoutCount < 50){
+        printf("trying to reach %d:  %d --> %d\n",entData[i], cursor, pred[i-1][cursor]);
+        
+        cursor = pred[i-1][cursor];
+        timeoutCount++;
+      }
+      //check to make sure exit was due to finding end and not due to timeout
+      /*for( int z = 0 ; z < 20;z++) {for (int q = 0; q < 19; q++){ printf("%d " ,dist[i][(z * 20) + q]); }printf("\n\n");}*/
+      if (timeoutCount < 50){
+        printf("Trying to move from (%d,%d) to (%d,%d)\n", entData[i] / V_SIZE, entData[i] % V_SIZE, cursor / V_SIZE, cursor % V_SIZE);
+        moveEnt(tiles, m2, &endIndic, 'v', entData[i] / V_SIZE, entData[i] % V_SIZE, cursor / V_SIZE, cursor % V_SIZE);
+      } else { 
+        fprintf(stderr, "timeout qwq\n");
+        connections->dijkstraLOUD(entData[i],dist[i-1],pred[i-1]);
+        for( int z = 0 ; z < 20;z++) {for (int q = 0; q < 19; q++){ printf("%d  " ,pred[i][(z * 20) + q]); }printf("\n\n");}
+        for( int z = 0 ; z < 20;z++) {for (int q = 0; q < 19; q++){ printf("%f  " ,dist[i][(z * 20) + q]); }printf("\n\n");}
+      } 
+
     }
     inputBuf[0] = ' ';
     printf("\n");

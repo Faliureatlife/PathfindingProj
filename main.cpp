@@ -62,6 +62,8 @@ int main(){
 
   run.runLoop(connectionMatrix,tileMatrix,tileData,entData);
 
+  delete tileData;
+  delete mapSelect;
   return 0;
 }
 
