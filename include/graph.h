@@ -32,6 +32,6 @@ public:
     void displayUndirected();
 
     void dijkstra(int s, double*& d, int*& pi);
-    void dijkstraLOUD(int s, double*& d, int*& pi);
+    void dijkstraPost(int s, double*& d, int*& pi);
 
 };

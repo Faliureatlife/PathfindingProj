@@ -15,7 +15,7 @@ graph* runner::createGFromM(Matrix<char>* mtrx, int* entPos) {
         for (int j = 0; j < V_SIZE; j++) {
             //still need to add in support for = and "
             c = mtrx->GetCell(i, j);
-            if ( c == '0' || c == 'v' || c == '^') {
+            if ( c == '0' || c == 'v' || c == '^' || c == '=' || c == '>') {
                 if (c == 'v') {
                   entPos[1+ecnt] = (i * V_SIZE + j);
                   ecnt++;
@@ -199,6 +199,15 @@ int runner::moveEnt(Matrix<char>*& tiles, Matrix<char>*& tiles2, int* endIndic, 
     score = 3;
   } else if (c == '>'){
     *endIndic = 1;
+  } else if (c == '"' && entType == '^'){
+    if (i1 == 1) {
+      tiles->SetCell(17,j2,entType);
+      tiles->SetCell(i1,j1,'0');
+    }else if (i1 == 17) {
+      tiles->SetCell(1,j2,entType);
+      tiles->SetCell(i1,j1,'0');
+    }
+    score = 2;
   }
   if (entType == 'v' && c == '^') *endIndic = -1;
   return score;
@@ -228,17 +237,20 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
     tileprint(tiles,tileData);
     //2 bc windows terminal is 2 bytes (char is one byte)
     char* inputBuf = new char[2];
-    printf("\n\n Press {w,a,s,d} followed by enter to move \n Or press space+enter to skip turn\033[34D\n\n Your move:");
+    printf("\n\n Press {w,a,s,d} followed by enter to move or q to Quit \n Or press space+enter to skip turn\033[34D\n\n Your move:");
     fgets(inputBuf, sizeof(inputBuf), stdin);
     //make sure H and V aren't swapped 
     if(inputBuf[0] == 'w') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE) - 1, (entData[0] % H_SIZE));
     else if(inputBuf[0] == 's') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE) + 1, (entData[0] % H_SIZE));
     else if(inputBuf[0] == 'a') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE), (entData[0] % H_SIZE) - 1);
     else if(inputBuf[0] == 'd') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE), (entData[0] % H_SIZE + 1));
+    else if(inputBuf[0] == 'q') endIndic = -1;
     //entData enemies are 1..3, dist & pred are double[double[]] and int[int[]]
     //pred might be removable
     for(int i = 1; i < 4; i++){
       connections->dijkstra(entData[i],dist[i-1],pred[i-1]);
+      for (int j = 0; j < 20; j++)
+        connections->dijkstraPost(entData[i],dist[i-1],pred[i-1]);
     }
     printf("\n");
     //print out enemy locations
@@ -253,23 +265,21 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
       int cursor = ((( entData[0] - (entData[0] % H_SIZE)) / H_SIZE) * V_SIZE) + ( entData[0] % H_SIZE );
 
       int timeoutCount = 0;
-      while(pred[i-1][cursor] != entData[i] && timeoutCount < 50){
-        printf("trying to reach %d:  %d --> %d\n",entData[i], cursor, pred[i-1][cursor]);
+      while(pred[i-1][cursor] != entData[i] && timeoutCount < SIZE){
+        /*printf("trying to reach %d:  %d --> %d\n",entData[i], cursor, pred[i-1][cursor]);*/
         
         cursor = pred[i-1][cursor];
         timeoutCount++;
       }
       //check to make sure exit was due to finding end and not due to timeout
       /*for( int z = 0 ; z < 20;z++) {for (int q = 0; q < 19; q++){ printf("%d " ,dist[i][(z * 20) + q]); }printf("\n\n");}*/
-      if (timeoutCount < 50){
-        printf("Trying to move from (%d,%d) to (%d,%d)\n", entData[i] / V_SIZE, entData[i] % V_SIZE, cursor / V_SIZE, cursor % V_SIZE);
+      if (timeoutCount < SIZE){
+        /*printf("Trying to move from (%d,%d) to (%d,%d)\n", entData[i] / V_SIZE, entData[i] % V_SIZE, cursor / V_SIZE, cursor % V_SIZE);*/
         moveEnt(tiles, m2, &endIndic, 'v', entData[i] / V_SIZE, entData[i] % V_SIZE, cursor / V_SIZE, cursor % V_SIZE);
-      } else { 
+      } /*else { 
         fprintf(stderr, "timeout qwq\n");
-        connections->dijkstraLOUD(entData[i],dist[i-1],pred[i-1]);
-        for( int z = 0 ; z < 20;z++) {for (int q = 0; q < 19; q++){ printf("%d  " ,pred[i][(z * 20) + q]); }printf("\n\n");}
-        for( int z = 0 ; z < 20;z++) {for (int q = 0; q < 19; q++){ printf("%f  " ,dist[i][(z * 20) + q]); }printf("\n\n");}
-      } 
+        for( int z = 0 ; z < 20;z++) {for (int q = 0; q < 19; q++){ printf("%d  " ,pred[i-1][(z * 20) + q]); }printf("\n\n");}
+      } */
 
     }
     inputBuf[0] = ' ';

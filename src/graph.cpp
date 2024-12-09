@@ -157,20 +157,14 @@ void graph::dijkstra(int s, double*& d, int*& pi) {
     delete V;
     delete S;
 }
-void graph::dijkstraLOUD(int s, double*& d, int*& pi) {
+
+void graph::dijkstraPost(int s, double*& d, int*& pi) {
     priorityQueue* V = new priorityQueue(n);
     queue* S = new queue(n);
-    for (int u = 0; u < n; u++) {
-        d[u] = DBL_MAX;
-        pi[u] = -1;
-    }
-    d[s] = 0;
-    /*printf("s is %d\n\n",s);*/
+
     for (int u = 0; u < n; u++) {
         V->push(u, d[u]);
     }
-    /*for( int z = 0 ; z < 20;z++) {for (int q = 0; q < 19; q++){ printf("%f " ,d[(z * 20) + q]); }printf("\n\n");}*/
-    /*V->display();*/
     while (!V->isEmpty()) {
         data out = V->pop();
         /*V->display(); //Dont know what you want with this*/
@@ -179,10 +173,11 @@ void graph::dijkstraLOUD(int s, double*& d, int*& pi) {
         //cout << "Use: " << out.index << " with d:" << out.value << endl;
         for (int v = 0; v < n; v++) {
             if (edgeExist(u, v)) {
-                /*printf("edge found between (%d,%d) \n\n",u,v);*/
                 double w = getEdgeWeight(u, v);
+                /*printf("edge found between (%d,%d), of weight %f \n\n",u,v,w);*/
+                /*printf("attempting to change d[v]: to d[u] \t(u,v):(%d,%d)\n\n",u,v);*/
                 if (d[v] > d[u] + w) {
-                    /*printf("changed d[v]:%f to d[u] + w:%f,%f\t(u,v):(%d,%d)\n\n",d[v],d[u],w,u,v);*/
+                    /*printf("changed d[v]:%.10f to d[u] + w:%f,%f\t(u,v):(%d,%d)\n\n",d[v],d[u],w,u,v);*/
                     d[v] = d[u] + w;
                     pi[v] = u;
                     V->decreaseKey(v, d[v]);
@@ -192,7 +187,7 @@ void graph::dijkstraLOUD(int s, double*& d, int*& pi) {
         /*DisplayShortestPath(d, pi, n);  */
         /*V->display(); //Dont know what you want with this*/
     }
-    for (int i = 0; i < n; i++) {std::cout << "vertex"<<i<<": d=" << d[i] << ": pi" << pi[i] << std::endl;}
+    /*for (int i = 0; i < n; i++) {std::cout << "vertex"<<i<<": d=" << d[i] << ": pi" << pi[i] << std::endl;}*/
     delete V;
     delete S;
 }
