@@ -122,18 +122,17 @@ void graph::dijkstra(int s, double*& d, int*& pi) {
     priorityQueue* V = new priorityQueue(n);
     queue* S = new queue(n);
     for (int u = 0; u < n; u++) {
-        d[u] = 100;
-      fprintf(stderr, "IM CHECKING \n");
+        d[u] = DBL_MAX;
         pi[u] = -1;
     }
     d[s] = 0;
     for (int u = 0; u < n; u++) {
         V->push(u, d[u]);
     }
-    V->display();
+    /*V->display();*/
     while (!V->isEmpty()) {
         data out = V->pop();
-        V->display(); //Dont know what you want with this
+        /*V->display(); //Dont know what you want with this*/
         S->enQueue(out.index);
         int u = out.index;
         //cout << "Use: " << out.index << " with d:" << out.value << endl;
@@ -148,7 +147,7 @@ void graph::dijkstra(int s, double*& d, int*& pi) {
             }
         }
         //DisplayShortestPath(d, pi, n);  
-        V->display(); //Dont know what you want with this
+        /*V->display(); //Dont know what you want with this*/
     }
     delete V;
     delete S;

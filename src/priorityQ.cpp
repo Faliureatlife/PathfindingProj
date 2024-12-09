@@ -68,8 +68,6 @@ void priorityQueue::push(int index, double value) {
 		}
 		queue[i] = x;
 		elements++;
-		std::cout << "Added (" << index << "," << value << ") size = " << elements
-			<< std::endl;
 	}
 	else {
 		std::cout << "Out of Capacity" << std::endl;

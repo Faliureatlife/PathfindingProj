@@ -6,4 +6,6 @@
 a.out
 x64
 CppProperties.json
+?.vcxpr
+?.sln
 

@@ -234,7 +234,8 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
     //pred might be removable
     for(int i = 1; i < 4; i++){
       connections->dijkstra(entData[i],dist[i-1],pred[i-1]);
-
+    }
+    for(int i = 1; i < 4; i++){
       
     }
     inputBuf[0] = ' ';
