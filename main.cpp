@@ -31,6 +31,7 @@
 int main(){
   runner run;
   setlocale(LC_ALL, "en_US.UTF-32");
+  system("chcp 65001");
   char* mapSelect = new char[CHARCOUNT]; //make sure that gets doesnt overflow with the \0 at the end
   //7 is number of types of tile, 6 is characters per tile
   char** tileData = new char*[7];
