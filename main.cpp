@@ -37,6 +37,7 @@ int main(){
   for(int i = 0; i < 7; i++) tileData[i] = new char[TILESIZE];
   Matrix<char>* tileMatrix;
   graph* connectionMatrix;
+  int* entData;
   
   printf("Press a number from 1 to 5 and then press enter to select a map: ");
   fgets(mapSelect, CHARCOUNT, stdin);
@@ -53,7 +54,7 @@ int main(){
   mapSelect[1] = mapSelect[0];
   mapSelect[0] = 'm';
     
-  run.initMap(connectionMatrix, tileMatrix, mapSelect, tileData);
+  run.initMap(connectionMatrix, tileMatrix, mapSelect, tileData, entData);
   return 0;
 }
 

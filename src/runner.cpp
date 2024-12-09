@@ -1,7 +1,7 @@
 
 #include "../include/runner.h"
 
-graph* runner::createGFromM(Matrix<char>* mtrx) {
+graph* runner::createGFromM(Matrix<char>* mtrx, int* entPos ) {
     //cursor
     char c;
     //cursor's cursor
@@ -10,10 +10,15 @@ graph* runner::createGFromM(Matrix<char>* mtrx) {
     //eqn for current
     //(i*H_SIZE) + j
     char n;
+    int ecnt = 0;
     for (int i = 0; i < H_SIZE; i++) {
         for (int j = 0; j < V_SIZE; j++) {
             //still need to add in support for = and "
             if ((c = mtrx->GetCell(i, j)) == '0' || c == 'v' || c == '^') {
+                if (c == 'v') {
+                entPos[1+ecnt] = 1;
+                ecnt++;
+                } else if (c == '^') entPos[0] == 1;
                 for (int k = -1; k < 2; k++) {
                     //add catch
                     try {
@@ -58,8 +63,7 @@ graph* runner::createGFromM(Matrix<char>* mtrx) {
             }
         }
     }
-    graff->display();
-    return nullptr;
+    return graff;
 }
 
 //reads file and stores the tile type at each point
@@ -109,19 +113,11 @@ void runner::initTiles(char** tileData) {
 
 
 void runner::tileprint(Matrix<char>* tiles, char** tileData) {
-    system("cls");
-    /*printf("%s",tileData[1]);*/
-    /*printf("\033[2A\033[3C");*/
-
-  /*
-    printf("%.16s",tileData[0]+12);
-    printf("%.9s",tileData[1]+9);
-    printf("%.6s",tileData[2]+6);
-    printf("%.9s",tileData[3]+9);
-    printf("%.9s",tileData[4]+9);
-    printf("%.7s",tileData[5]+7);
-    printf("%.3s",tileData[6]+3);
-    */
+  #if __linux__
+    system("clear");
+  #elif _WIN32
+    sytem("CLS");
+  #endif
     for (int i = 0; i < H_SIZE; i++) {
         for (int j = 0; j < V_SIZE; j++) {
             //would use switch for readability but not allowed to use break
@@ -136,9 +132,7 @@ void runner::tileprint(Matrix<char>* tiles, char** tileData) {
             else if (tiles->GetCell(i, j) == '=') printf("%.9s ", tileData[6]);
             else printf("no valid character match found");
         }
-
         printf("\n");
-
         for (int j = 0; j < V_SIZE; j++) {
             //would use switch for readability but not allowed to use break
             //and then we print ending with ,tileData[n] + 12
@@ -159,17 +153,17 @@ void runner::tileprint(Matrix<char>* tiles, char** tileData) {
 
 //function that calls createfromfile for Matrix and graph
 //if pointers don't work then return as enum <graph,Matrix>
-void runner::initMap(graph*& connections, Matrix<char>*& tiles, char* fName, char** tileData) {
+void runner::initMap(graph*& connections, Matrix<char>*& tiles, char* fName, char** tileData, int*& entData) {
     //doesnt print unless specified to where
-    //"gdata/maps/"
     char* dir = new char[CHARCOUNT + 11];
+
+    entData = new int[50];
+
     //create tchar because we cant use a string literal casted to a char*
     char* tchar = (char*)"gdata/maps/";
 
     //remember to remove 'terminating nul'
     sprintf(dir, "gdata/maps/%c%c", fName[0], fName[1]);
-    /*dir[12] = fName[1];*/
-    /*std::ifstream map(dir, std::ios::in)*/
     FILE* map = fopen(dir, "r");
 
     //grab the tiles from the files that define them
@@ -179,7 +173,44 @@ void runner::initMap(graph*& connections, Matrix<char>*& tiles, char* fName, cha
     tiles = createMFromFile(map);
     tileprint(tiles, tileData);
 
-    connections = createGFromM(tiles);
+    connections = createGFromM(tiles,entData);
     fclose(map);
 
 }
+
+/*void runner:runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData, int*& entData){*/
+  //make matrix into graph
+  //print matrix
+  //prompt user to move {w,a,s,d} + enter
+  //run algo for enemy movement 
+  //update matrix with new player Pos and new enemy Pos
+
+
+
+/*}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
