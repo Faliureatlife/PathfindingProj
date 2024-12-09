@@ -59,7 +59,7 @@ int main(){
 
   run.initMap(connectionMatrix, tileMatrix, mapSelect, tileData, entData);
 
-  Matrix<char>* matrixCpy = Matrix(tileMatrix);
+  run.runLoop()
 
   return 0;
 }

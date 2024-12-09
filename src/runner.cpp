@@ -114,7 +114,7 @@ void runner::initTiles(char** tileData) {
 
 void runner::tileprint(Matrix<char>* tiles, char** tileData) {
   #if __linux__
-    system("clear");
+    system("clear"); //look man i use linux okay
   #elif _WIN32
     system("CLS");
   #endif
@@ -158,6 +158,8 @@ void runner::initMap(graph*& connections, Matrix<char>*& tiles, char* fName, cha
     char* dir = new char[CHARCOUNT + 11];
 
     entData = new int[50];
+    
+    //if its annoying use memcpy
 
     //create tchar because we cant use a string literal casted to a char*
     char* tchar = (char*)"gdata/maps/";
@@ -174,18 +176,44 @@ void runner::initMap(graph*& connections, Matrix<char>*& tiles, char* fName, cha
     tileprint(tiles, tileData);
 
     connections = createGFromM(tiles,entData);
-    fclose(map);
-
 }
 
-runner:: void
+//will need to sum up weight of movement and return score
+int runner::moveEnt(Matrix<char>*& tiles, Matrix<char>*& tiles,char entType, int i1, int j1, int i2, int j2){
+  int score;
+  if{i1 >= H_SIZE || i2 >= H_SIZE || j1 >= V_SIZE || j2 >= V_SIZE} fprintf(stderr, "invalid move position\n");
+  int c = tiles->GetCell(i2,j2);
+  if (c == '0') {
+    tiles->SetCell(i2,j2,entType);
+    tiles->SetCell(i1,j1,c);
+    score = 1;
+  } else if (c == '=') {
+    tiles->SetCell(i2,j2,entType);
+    tiles->SetCell(i1,j1,c);
+    score = 3;
+  }
+  if (entType == 'v' && c == '^') score = 500;
+  return score;
+}
+
 void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData, int*& entData){
-  connections = createGFromM(tiles, entData);
-  tileprint(tiles,tileData);
-  char* inputBuf = new char[4];
-  printf("\n\n Press {w,a,s,d} followed by enter to move \n Or press space+enter to skip turn");
-  fgets(inputBuf, 4, stdin);
-  
+  Matrix<char>* m2 = Matrix(tiles);
+  int endIndic = 0;
+  //if win then 1, if lose then - 1
+  while (endInic == 0){
+    connections = createGFromM(tiles, entData);
+    tileprint(tiles,tileData);
+    //2 bc windows terminal is 2 bytes (char is one byte)
+    char* inputBuf = new char[2];
+    printf("\n\n Press {w,a,s,d} followed by enter to move \n Or press space+enter to skip turn");
+    fgets(inputBuf, 2, stdin);
+    //make sure H and V aren't swapped 
+    if(inputBuf[0] == w) score += moveEnt(tiles, m2, entData[0] / H_SIZE, entData[0] % V_SIZE, (entData[0] / H_SIZE) - 1, (entData[0] / H_SIZE));
+    else if(inputBuf[0] == s) score += moveEnt(tiles, m2, entData[0] / H_SIZE, entData[0] % V_SIZE, (entData[0] / H_SIZE) + 1, (entData[0] / H_SIZE));
+    else if(inputBuf[0] == a) score += moveEnt(tiles, m2, entData[0] / H_SIZE, entData[0] % V_SIZE, (entData[0] / H_SIZE), (entData[0] / H_SIZE) - 1);
+    else if(inputBuf[0] == d) score += moveEnt(tiles, m2, entData[0] / H_SIZE, entData[0] % V_SIZE, (entData[0] / H_SIZE), (entData[0] / H_SIZE + 1));
+
+  }
   //make matrix into graph
   //print matrix
   //prompt user to move {w,a,s,d} + enter
