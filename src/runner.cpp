@@ -65,7 +65,6 @@ graph* runner::createGFromM(Matrix<char>* mtrx, int* entPos) {
             }
         }
     }
-    for (int k = 0; k < 4; k++ ) fprintf(stderr,"%d\n",entPos[k]);
     return graff;
 }
 
@@ -195,7 +194,6 @@ int runner::moveEnt(Matrix<char>*& tiles, Matrix<char>*& tiles2, int* endIndic, 
     tiles->SetCell(i2,j2,entType);//set the empty to the type
     tiles->SetCell(i1,j1,'0');//then set it to empty 
     score = 1;
-    tiles->Display();
   } else if (c == '=') {
     tiles->SetCell(i2,j2,entType);
     if((h = tiles->GetCell(i1,j1)) == '^' || h == 'v'){
@@ -213,21 +211,27 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
   Matrix<char>* m2(tiles);
   int endIndic = 0;
   int score = 0;
+  double** dist;
+  int** pred;
+
   //if win then 1, if lose then -1
   while (endIndic == 0){
     connections = createGFromM(tiles, entData);
     tileprint(tiles,tileData);
     //2 bc windows terminal is 2 bytes (char is one byte)
     char* inputBuf = new char[2];
-    printf("\n\n Press {w,a,s,d} followed by enter to move \n Or press space+enter to skip turn\033[34D\n\n");
-    fgets(inputBuf, 2, stdin);
+    printf("\n\n Press {w,a,s,d} followed by enter to move \n Or press space+enter to skip turn\033[34D\n\n Your move:");
+    fgets(inputBuf, sizeof(inputBuf), stdin);
     //make sure H and V aren't swapped 
     if(inputBuf[0] == 'w') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE) - 1, (entData[0] % H_SIZE));
     else if(inputBuf[0] == 's') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE) + 1, (entData[0] % H_SIZE));
     else if(inputBuf[0] == 'a') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE), (entData[0] % H_SIZE) - 1);
     else if(inputBuf[0] == 'd') score += moveEnt(tiles, m2, &endIndic, '^', entData[0] / H_SIZE, entData[0] % H_SIZE, (entData[0] / H_SIZE), (entData[0] % H_SIZE + 1));
     for(int i = 1; i < 4; i++){
+      
     }
+    inputBuf[0] = ' ';
+    printf("\n");
 
   }
   if (endIndic == 1) printf("Wowzers you did it!                      \nScore: %d\n",score);
