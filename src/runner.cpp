@@ -351,8 +351,8 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
       printf("\n");
 
     }
-    if (endIndic == 1) printf("Good job on completing the trial, you did it!                      \nScore(Lower is better): %d\n", score);
-    else printf("You got caught by an enemy ... better luck next time!");
+    if (endIndic == 1) printf("Good job on completing the trial, you did it!                      \nScore(Lower is better): %d\n\n", score);
+    else printf("You got caught by an enemy ... better luck next time!\n\n");
 
   } else if (mode == '2'){ 
     Matrix<char>* m2(tiles);
@@ -427,8 +427,8 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
       printf("\n");
 
     }
-    if (endIndic == 1) printf("Good job on completing the trial, you did it!                      \nScore(Lower is better): %d\n", score);
-    else printf("You got caught by an enemy ... better luck next time!");
+    if (endIndic == 1) printf("Good job on completing the trial, you did it!                      \nScore(Lower is better): %d\n\n", score);
+    else printf("You got caught by an enemy ... better luck next time!\n\n");
   }
   
 
