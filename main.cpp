@@ -38,6 +38,8 @@ int main(){
   Matrix<char>* tileMatrix;
   graph* connectionMatrix;
   int* entData;
+
+  printf("Press a number from 1 to 2 and then press enter to select mode: \n");
   
   printf("Press a number from 1 to 5 and then press enter to select a map: ");
   fgets(mapSelect, CHARCOUNT, stdin);
