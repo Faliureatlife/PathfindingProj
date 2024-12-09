@@ -343,7 +343,7 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
           /*printf("Trying to move from (%d,%d) to (%d,%d)\n", entData[i] / V_SIZE, entData[i] % V_SIZE, cursor / V_SIZE, cursor % V_SIZE);*/
           moveEnt(tiles, m2, &endIndic, 'v', entData[i] / V_SIZE, entData[i] % V_SIZE, cursor / V_SIZE, cursor % V_SIZE);
         } /*else { 
-          fprintf(stderr, "timeout qwq\n");
+          fprintf(stderr, "timeout \n");
           for( int z = 0 ; z < 20;z++) {for (int q = 0; q < 19; q++){ printf("%d  " ,pred[i-1][(z * 20) + q]); }printf("\n\n");}
         } */
 
@@ -352,7 +352,7 @@ void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData,
       printf("\n");
 
     }
-    if (endIndic == 1) printf("Wowzers you did it!                      \nScore(Lower is better): %d\n",score);
+    if (endIndic == 1) printf("Good job on completing the level, you did it!                      \nScore(Lower is better): %d\n",score);
 
   } else if (mode == '2'){ 
     Matrix<char>* m2(tiles);
