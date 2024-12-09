@@ -27,6 +27,7 @@
 //TILESIZE is the amount of chars in a single tile 
 #define TILESIZE 6
 
+
 int main(){
   runner run;
   setlocale(LC_ALL, "en_US.UTF-32");
@@ -36,10 +37,18 @@ int main(){
   for(int i = 0; i < 7; i++) tileData[i] = new char[TILESIZE];
   Matrix<char>* tileMatrix;
   graph* connectionMatrix;
-
-  printf("Press a number from 1 to 5 and then press enter to select a map ");
-
+  
+  printf("Press a number from 1 to 5 and then press enter to select a map: ");
   fgets(mapSelect, CHARCOUNT, stdin);
+
+  // Validate input to ensure it is between '1' and '5'
+  while (mapSelect[0] < '1' || mapSelect[0] > '5') {
+      printf("Invalid Map Number\n");
+      while (getchar() != '\n');
+      printf("Press a number from 1 to 5 and then press enter to select a map: ");
+      fgets(mapSelect, CHARCOUNT, stdin);
+  }
+
   printf("%c\n",mapSelect[0]);
   mapSelect[1] = mapSelect[0];
   mapSelect[0] = 'm';

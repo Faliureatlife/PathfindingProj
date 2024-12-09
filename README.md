@@ -2,7 +2,10 @@ An idiot admires complexity, a genius admires simplicity, a physicist tries to m
 
 git add -A //adds all changed files                      \
 git commit -m "message" //adds the commit comment/logs   \
-git push //pushes to main                                 
+git push //pushes to main                                
+
+Name: Nick Martinez ID: 301776242
+Name: Mathan Ramos ID: 301632215
 
 
 
