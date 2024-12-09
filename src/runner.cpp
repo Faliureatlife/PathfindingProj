@@ -116,7 +116,7 @@ void runner::tileprint(Matrix<char>* tiles, char** tileData) {
   #if __linux__
     system("clear");
   #elif _WIN32
-    sytem("CLS");
+    system("CLS");
   #endif
     for (int i = 0; i < H_SIZE; i++) {
         for (int j = 0; j < V_SIZE; j++) {
@@ -178,16 +178,20 @@ void runner::initMap(graph*& connections, Matrix<char>*& tiles, char* fName, cha
 
 }
 
-/*void runner:runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData, int*& entData){*/
+runner:: void
+void runner::runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData, int*& entData){
+  connections = createGFromM(tiles, entData);
+  tileprint(tiles,tileData);
+  char* inputBuf = new char[4];
+  printf("\n\n Press {w,a,s,d} followed by enter to move \n Or press space+enter to skip turn");
+  fgets(inputBuf, 4, stdin);
+  
   //make matrix into graph
   //print matrix
   //prompt user to move {w,a,s,d} + enter
   //run algo for enemy movement 
   //update matrix with new player Pos and new enemy Pos
-
-
-
-/*}*/
+}
 
 
 

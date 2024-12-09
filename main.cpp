@@ -55,8 +55,12 @@ int main(){
   printf("%c\n",mapSelect[0]);
   mapSelect[1] = mapSelect[0];
   mapSelect[0] = 'm';
-    
+
+
   run.initMap(connectionMatrix, tileMatrix, mapSelect, tileData, entData);
+
+  Matrix<char>* matrixCpy = Matrix(tileMatrix);
+
   return 0;
 }
 

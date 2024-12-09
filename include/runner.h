@@ -39,4 +39,5 @@ public:
     //function that calls createfromfile for Matrix and graph
     //if pointers don't work then return as enum <graph,Matrix>
     void initMap(graph*& connections, Matrix<char>*& tiles, char* fName, char** tileData, int*& entData);
+    void runLoop(graph*& connections, Matrix<char>*& tiles, char** tileData, int*& entData);
 };

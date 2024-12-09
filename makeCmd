@@ -1,1 +1,0 @@
-g++ -I./include main.cpp src/*.cpp -o a.out
